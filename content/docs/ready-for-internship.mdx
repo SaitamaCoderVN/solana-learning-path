@@ -1,0 +1,488 @@
+---
+title: Phase 3 - Ready for Internship
+description: Advanced Solana development, testing, deployment, and open source contribution
+---
+
+## 🎯 Learning Objectives
+
+By the end of this phase, you will:
+
+- Master Solana SPL program development
+- Write comprehensive unit and integration tests
+- Deploy programs to devnet and mainnet
+- Build production-ready dApps
+- Contribute to open source projects
+- Understand professional development workflows
+
+## 🚀 Skills to Master
+
+### Understanding Solana SPL Programs
+
+#### SPL Token Program
+
+- **Token Creation**: Mint new tokens with metadata
+- **Token Management**: Transfer, burn, freeze, thaw
+- **Mint Authority**: Control over token supply
+- **Freeze Authority**: Ability to freeze accounts
+
+#### SPL Associated Token Account (ATA)
+
+- **Purpose**: Dedicated account for specific token mint
+- **Derivation**: Deterministic address calculation
+- **Benefits**: Simplified token management
+- **Usage**: Automatic account creation and management
+
+#### SPL Token-2022 Program
+
+- **Enhanced Features**: Transfer fees, interest-bearing tokens
+- **Backward Compatibility**: Works with existing SPL tokens
+- **Advanced Functionality**: Confidential transfers, metadata
+- **Implementation**: Extended token program capabilities
+
+#### Key SPL Concepts
+
+```rust
+// Token mint creation
+pub fn create_mint(
+    ctx: Context<CreateMint>,
+    decimals: u8,
+    mint_authority: Pubkey,
+    freeze_authority: Option<Pubkey>,
+) -> Result<()> {
+    // Implementation
+}
+
+// Associated token account creation
+pub fn create_associated_token_account(
+    ctx: Context<CreateAssociatedTokenAccount>,
+) -> Result<()> {
+    // Implementation
+}
+```
+
+### Writing Unit & Integration Tests
+
+#### Unit Testing Fundamentals
+
+- **Test Structure**: Arrange, Act, Assert pattern
+- **Mocking**: Simulate external dependencies
+- **Edge Cases**: Boundary conditions and error scenarios
+- **Coverage**: Ensure all code paths are tested
+
+#### Anchor Testing Framework
+
+```rust
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use anchor_lang::solana_program::clock::Epoch;
+    use anchor_spl::token::{Mint, Token, TokenAccount};
+    use anchor_lang::solana_program::system_program;
+
+    #[test]
+    fn test_initialize() {
+        let program = anchor_lang::solana_program::system_program::ID;
+        let (pda, _bump) = Pubkey::find_program_address(
+            &[b"test"],
+            &program,
+        );
+
+        let mut accounts = Initialize {
+            base_account: pda,
+            user: test_user.pubkey(),
+            system_program: system_program::ID,
+        };
+
+        let ix = Instruction {
+            program_id: program,
+            accounts: vec![
+                AccountMeta::new(accounts.base_account, false),
+                AccountMeta::new(accounts.user, true),
+                AccountMeta::new_readonly(accounts.system_program, false),
+            ],
+            data: vec![],
+        };
+
+        let result = process_instruction(&program, &accounts, &ix);
+        assert!(result.is_ok());
+    }
+}
+```
+
+#### Integration Testing
+
+- **End-to-End**: Complete workflow testing
+- **Cross-Program**: Multiple program interaction
+- **Network Simulation**: Local validator testing
+- **Performance**: Transaction speed and cost analysis
+
+#### Testing Best Practices
+
+- **Test Data**: Realistic, varied test scenarios
+- **Error Handling**: Test all error conditions
+- **Performance**: Measure gas costs and execution time
+- **Security**: Test for common vulnerabilities
+
+### Deployment to Devnet
+
+#### Devnet vs Mainnet
+
+- **Devnet**: Testing environment with free SOL
+- **Mainnet**: Production network with real value
+- **Testnet**: Local development and testing
+- **Network Selection**: Choose based on development stage
+
+#### Program Deployment Process
+
+```bash
+# Build program
+anchor build
+
+# Deploy to devnet
+anchor deploy --provider.cluster devnet
+
+# Verify deployment
+solana program show <PROGRAM_ID>
+```
+
+#### Memory and Account Management
+
+- **Program Size**: Optimize for deployment costs
+- **Account Limits**: Understand storage constraints
+- **Rent**: Account storage costs
+- **Cleanup**: Remove unused accounts
+
+#### Copying from Devnet/Mainnet
+
+```bash
+# Download program from devnet
+solana program dump <PROGRAM_ID> program.so
+
+# Deploy to localnet
+solana program deploy program.so
+
+# Copy accounts
+solana account <ACCOUNT_ADDRESS> --output-file account.json
+```
+
+### Starting Small Projects
+
+#### Custom Hook for Token-2022
+
+**Objective**: Create reusable React hook for token operations
+
+**Features**:
+
+- Token balance queries
+- Transfer operations
+- Mint/burn functionality
+- Transaction status tracking
+
+**Implementation**:
+
+```typescript
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { useMemo, useState, useEffect } from "react";
+
+export const useToken2022 = (mintAddress: string) => {
+  const { connection } = useConnection();
+  const { publicKey } = useWallet();
+  const [balance, setBalance] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const getBalance = async () => {
+    if (!publicKey || !mintAddress) return;
+
+    setLoading(true);
+    try {
+      const tokenAccounts = await connection.getParsedTokenAccountsByOwner(
+        publicKey,
+        { mint: new PublicKey(mintAddress) }
+      );
+
+      if (tokenAccounts.value.length > 0) {
+        setBalance(
+          tokenAccounts.value[0].account.data.parsed.info.tokenAmount.uiAmount
+        );
+      }
+    } catch (error) {
+      console.error("Error fetching balance:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getBalance();
+  }, [publicKey, mintAddress]);
+
+  return { balance, loading, refreshBalance: getBalance };
+};
+```
+
+#### Project Requirements
+
+- **Documentation**: Clear usage instructions
+- **Testing**: Unit tests for all functions
+- **Error Handling**: Graceful error management
+- **TypeScript**: Full type safety
+- **Examples**: Usage examples and demos
+
+### Gitflow & Open Source Contribution
+
+#### Gitflow Workflow
+
+- **Main Branch**: Production-ready code
+- **Develop Branch**: Integration branch for features
+- **Feature Branches**: Individual feature development
+- **Release Branches**: Preparation for releases
+- **Hotfix Branches**: Critical bug fixes
+
+#### Branch Naming Convention
+
+```bash
+# Feature branches
+git checkout -b feature/token-2022-hook
+
+# Bug fix branches
+git checkout -b fix/balance-calculation
+
+# Release branches
+git checkout -b release/v1.0.0
+
+# Hotfix branches
+git checkout -b hotfix/critical-bug
+```
+
+#### Open Source Contribution
+
+- **Fork & Clone**: Start with project fork
+- **Issue Tracking**: Report bugs and request features
+- **Pull Requests**: Submit code changes
+- **Code Review**: Respond to feedback
+- **Documentation**: Improve project docs
+
+#### Contribution Best Practices
+
+- **Small Changes**: Keep PRs focused and manageable
+- **Clear Communication**: Explain changes and reasoning
+- **Follow Standards**: Adhere to project conventions
+- **Test Thoroughly**: Ensure changes don't break existing functionality
+
+## 📚 Lecture: Interactive Slides
+
+<Cards>
+  <Card
+    title="SPL Programs Deep Dive"
+    href="/docs/ready-for-internship/spl-programs"
+  />
+  <Card title="Testing Strategies" href="/docs/ready-for-internship/testing" />
+  <Card
+    title="Deployment & DevOps"
+    href="/docs/ready-for-internship/deployment"
+  />
+  <Card
+    title="Advanced Project Development"
+    href="/docs/ready-for-internship/projects"
+  />
+  <Card
+    title="Open Source Contribution"
+    href="/docs/ready-for-internship/opensource"
+  />
+</Cards>
+
+## 🏆 Interactive Bounties
+
+**Required**: 3 bounties
+
+_Details will be announced later_
+
+## 💻 Practice Exercises
+
+### 1. Display Token List of a Wallet
+
+**Objective**: Build comprehensive token management interface
+
+**Requirements**:
+
+- **Backend**: Solana program for token queries
+- **Frontend**: React interface with wallet integration
+- **Features**: Token list, balances, transfer functionality
+- **Integration**: Support for SPL and Token-2022
+
+**Technical Implementation**:
+
+```typescript
+interface TokenInfo {
+  mint: string;
+  symbol: string;
+  name: string;
+  balance: number;
+  decimals: number;
+  logoURI?: string;
+}
+
+const useWalletTokens = () => {
+  const [tokens, setTokens] = useState<TokenInfo[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchTokens = async () => {
+    // Implementation for fetching all wallet tokens
+  };
+
+  return { tokens, loading, refresh: fetchTokens };
+};
+```
+
+### 2. Anchor Vault
+
+**Concept**: Secure multi-signature vault system
+
+- **Smart Contract**: Multi-sig vault with time locks
+- **Features**: Deposit, withdraw, time-based restrictions
+- **Security**: Multiple signature requirements
+- **UI**: Dashboard for vault management
+
+**Advanced Features**:
+
+- Time-locked withdrawals
+- Multi-signature approval
+- Emergency pause functionality
+- Comprehensive audit logging
+
+### 3. Anchor Escrow
+
+**Objective**: Build trustless escrow system
+
+- **Smart Contract**: Escrow with dispute resolution
+- **Features**: Create, fund, release, dispute escrows
+- **Security**: Time-based auto-release
+- **Integration**: Multi-token support
+
+**Implementation Details**:
+
+```rust
+#[derive(Accounts)]
+pub struct CreateEscrow<'info> {
+    #[account(
+        init,
+        payer = buyer,
+        space = 8 + Escrow::INIT_SPACE,
+        seeds = [b"escrow", buyer.key().as_ref(), &[escrow_bump]],
+        bump
+    )]
+    pub escrow: Account<'info, Escrow>,
+    #[account(mut)]
+    pub buyer: Signer<'info>,
+    pub seller: SystemAccount<'info>,
+    pub mint: Account<'info, Mint>,
+    pub buyer_token_account: Account<'info, TokenAccount>,
+    pub seller_token_account: Account<'info, TokenAccount>,
+    pub escrow_token_account: Account<'info, TokenAccount>,
+    pub system_program: Program<'info, System>,
+    pub token_program: Program<'info, Token>,
+    pub associated_token_program: Program<'info, AssociatedToken>,
+    pub rent: Sysvar<'info, Rent>,
+}
+```
+
+### 4. Build Question Pool - Multiple Choice Questions
+
+**Coverage Areas**:
+
+- **SPL Programs** (20 questions)
+- **Testing Strategies** (15 questions)
+- **Deployment & DevOps** (15 questions)
+- **Advanced Development** (20 questions)
+- **Open Source & Collaboration** (10 questions)
+
+**Requirements**:
+
+- Production-focused scenarios
+- Real-world problem solving
+- Advanced technical concepts
+- Industry best practices
+
+## 📝 Exam: 45 Minutes
+
+### Exam Structure
+
+- **Total Questions**: 40
+- **Time Limit**: 45 minutes
+- **Passing Score**: 80% (32/40 correct)
+
+### Question Distribution
+
+- **SPL Programs**: 10 questions
+- **Testing**: 8 questions
+- **Deployment**: 8 questions
+- **Advanced Development**: 10 questions
+- **Open Source**: 4 questions
+
+### Exam Topics
+
+- SPL token program architecture
+- Token-2022 advanced features
+- Unit and integration testing strategies
+- Devnet deployment and management
+- Program optimization and gas costs
+- Multi-signature and security patterns
+- Gitflow workflow and collaboration
+- Open source contribution best practices
+
+### Preparation Tips
+
+- Complete all advanced projects
+- Practice deployment to devnet
+- Review SPL program documentation
+- Understand testing frameworks
+- Familiarize with Gitflow workflow
+
+## 🎯 Phase Completion Checklist
+
+- [ ] Complete all 3 interactive bounties
+- [ ] Finish all 4 practice exercises
+- [ ] Pass the 45-minute exam with 80%+
+- [ ] Deploy programs to devnet successfully
+- [ ] Contribute to open source project
+- [ ] Build production-ready dApp
+- [ ] Submit comprehensive documentation
+- [ ] Receive final phase completion certificate
+
+## 🎓 Internship Readiness Assessment
+
+### Technical Skills (70%)
+
+- Solana program development
+- Testing and deployment
+- SPL program mastery
+- Performance optimization
+
+### Professional Skills (20%)
+
+- Git workflow mastery
+- Open source contribution
+- Documentation writing
+- Code review participation
+
+### Project Portfolio (10%)
+
+- Completed dApps
+- GitHub contributions
+- Technical blog posts
+- Community engagement
+
+## 🔗 Additional Resources
+
+<Cards>
+  <Card title="SPL Token Program" href="https://spl.solana.com/token" />
+  <Card
+    title="Solana Program Library"
+    href="https://github.com/solana-labs/solana-program-library"
+  />
+  <Card
+    title="Anchor Testing Guide"
+    href="https://book.anchor-lang.com/chapter_4/tests.html"
+  />
+  <Card title="Solana Devnet" href="https://docs.solana.com/clusters" />
+</Cards>
