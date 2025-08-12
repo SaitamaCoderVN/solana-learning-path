@@ -1,0 +1,217 @@
+---
+title: Phase 1 - Solana Basic
+description: Foundation knowledge and skills for Solana blockchain development
+---
+
+## 🎯 Learning Objectives
+
+By the end of this phase, you will:
+
+- Understand what can be built with Solana
+- Grasp Solana as a cloud computing platform
+- Master fundamental concepts like PDAs and transactions
+- Learn about wallet functionality and management
+- Complete practical exercises and assessments
+
+## 🚀 Skills to Master
+
+### What Can You Build with Solana?
+
+Solana enables developers to build a wide range of decentralized applications:
+
+- **DeFi Protocols**: DEXs, lending platforms, yield farming
+- **NFT Marketplaces**: Digital art, gaming assets, collectibles
+- **Gaming**: Play-to-earn games, virtual worlds
+- **Social Platforms**: Decentralized social networks
+- **Supply Chain**: Transparent tracking and verification
+- **Identity Systems**: Self-sovereign identity solutions
+
+### Solana as Cloud Computing
+
+#### Validator Network
+
+- **Validators**: Nodes that process transactions and maintain the network
+- **Consensus**: Proof of History (PoH) + Proof of Stake (PoS)
+- **Network Architecture**: Global distributed network of computers
+
+#### Blockchain Basics
+
+- **Blocks**: Groups of transactions processed together
+- **Chain**: Sequential linking of blocks with cryptographic proofs
+- **Decentralization**: No single point of failure or control
+
+#### Cryptographic Fundamentals
+
+- **Private Key**: Secret key for signing transactions (keep secure!)
+- **Public Key**: Address derived from private key (shareable)
+- **Keypair**: The combination of private and public keys
+
+#### Block Production Process
+
+1. **Transaction Submission**: Users submit transactions to the network
+2. **Validation**: Validators verify transaction validity
+3. **Block Creation**: Valid transactions are grouped into blocks
+4. **Consensus**: Network agrees on block order using PoH
+5. **Finalization**: Block is added to the blockchain
+
+### Understanding Solana Fundamentals
+
+#### Program Derived Addresses (PDAs)
+
+- **Definition**: Deterministic addresses derived from program ID and seeds
+- **Purpose**: Store program state and data on-chain
+- **Uniqueness**: Guaranteed to be unique within a program's address space
+- **Usage**: Accounts, program state, cross-program invocation
+
+#### Transactions
+
+- **Structure**: Instructions, accounts, recent blockhash, signatures
+- **Types**: Transfer, program invocation, account creation
+- **Fees**: Small fees paid in SOL for network processing
+- **Confirmation**: Multiple confirmations ensure finality
+
+### Understanding Wallets
+
+#### Wallet Components
+
+- **Keypair Management**: Secure storage of private keys
+- **Address Generation**: Deriving public addresses from private keys
+- **Transaction Signing**: Cryptographic proof of ownership
+- **Balance Tracking**: Monitoring SOL and token balances
+
+#### Wallet Types
+
+- **Software Wallets**: Phantom, Solflare, Backpack
+- **Hardware Wallets**: Ledger, Trezor
+- **Custodial Wallets**: Exchange-managed wallets
+- **Non-custodial Wallets**: User-controlled private keys
+
+## 📚 Lecture: Interactive Slides
+
+<Cards>
+  <Card
+    title="Solana Architecture Overview"
+    href="/docs/solana-basic/architecture"
+  />
+  <Card
+    title="Cryptography Fundamentals"
+    href="/docs/solana-basic/cryptography"
+  />
+  <Card title="Wallet Deep Dive" href="/docs/solana-basic/wallets" />
+  <Card title="Transaction Lifecycle" href="/docs/solana-basic/transactions" />
+</Cards>
+
+## 🏆 Interactive Bounties
+
+**Required**: 3 bounties
+
+_Details will be announced later_
+
+## 💻 Practice Exercises
+
+### 1. Build Question Pool - Multiple Choice Questions
+
+Create a comprehensive question bank covering:
+
+- **Solana Fundamentals** (15 questions)
+- **Cryptography Concepts** (10 questions)
+- **Wallet Operations** (10 questions)
+- **Network Architecture** (10 questions)
+
+**Requirements**:
+
+- Each question must have 4 answer choices
+- Include explanations for correct answers
+- Cover difficulty levels: Easy (40%), Medium (40%), Hard (20%)
+- Submit as a structured JSON or markdown file
+
+### 2. Create & Transact with Wallet using JavaScript
+
+**Setup**:
+
+```bash
+npm init -y
+npm install @solana/web3.js
+```
+
+**Tasks**:
+
+- Generate a new keypair
+- Connect to Solana devnet
+- Request airdrop of SOL
+- Send a transaction to another address
+- Verify transaction success
+
+**Deliverables**:
+
+- Working JavaScript code
+- Transaction hash from devnet
+- Screenshot of successful transaction
+
+### 3. Claim Devnet Token with Solana Faucet
+
+**Steps**:
+
+1. Visit Solana Faucet (https://faucet.solana.com/)
+2. Connect your wallet
+3. Request devnet SOL
+4. Verify balance increase
+5. Document the process
+
+**Requirements**:
+
+- Screenshot of faucet interaction
+- Proof of balance increase
+- Understanding of faucet limitations and purpose
+
+## 📝 Exam: 45 Minutes
+
+### Exam Structure
+
+- **Total Questions**: 30
+- **Time Limit**: 45 minutes
+- **Passing Score**: 70% (21/30 correct)
+
+### Question Distribution
+
+- **Solana Basics**: 8 questions
+- **Cryptography**: 6 questions
+- **Wallets**: 6 questions
+- **Transactions**: 6 questions
+- **Network Architecture**: 4 questions
+
+### Exam Topics
+
+- Solana use cases and applications
+- Validator network and consensus mechanisms
+- Private/public key relationships
+- Block production and confirmation
+- PDA concepts and usage
+- Transaction structure and lifecycle
+- Wallet types and security
+- Network differences (mainnet/devnet/testnet)
+
+### Preparation Tips
+
+- Review all lecture materials
+- Complete all practice exercises
+- Test your knowledge with sample questions
+- Ensure wallet setup is complete
+- Have devnet access ready
+
+## 🎯 Phase Completion Checklist
+
+- [ ] Complete all 3 interactive bounties
+- [ ] Finish all practice exercises
+- [ ] Pass the 45-minute exam with 70%+
+- [ ] Submit all deliverables and documentation
+- [ ] Receive phase completion certificate
+
+## 🔗 Additional Resources
+
+<Cards>
+  <Card title="Solana Documentation" href="https://docs.solana.com" />
+  <Card title="Solana Cookbook" href="https://solanacookbook.com" />
+  <Card title="Solana Discord" href="https://discord.gg/solana" />
+  <Card title="Solana GitHub" href="https://github.com/solana-labs" />
+</Cards>
