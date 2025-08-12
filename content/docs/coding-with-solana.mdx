@@ -1,0 +1,386 @@
+---
+title: Phase 2 - Coding with Solana
+description: Hands-on development with Solana, JavaScript, Rust, and Anchor framework
+---
+
+## 🎯 Learning Objectives
+
+By the end of this phase, you will:
+
+- Set up a complete Solana development environment
+- Write basic JavaScript and Rust code
+- Query on-chain data using JavaScript
+- Develop and deploy Anchor programs
+- Master Git basics and version control
+- Build complete dApp projects
+
+## 🚀 Skills to Master
+
+### Development Environment Setup
+
+#### Local Machine Configuration
+
+- **Operating System**: Windows, macOS, or Linux
+- **Memory**: Minimum 8GB RAM (16GB recommended)
+- **Storage**: At least 20GB free space
+- **Network**: Stable internet connection
+
+#### Required Software
+
+- **Node.js**: Version 18+ (LTS recommended)
+- **Rust**: Latest stable version via rustup
+- **Solana CLI**: Latest version
+- **Git**: Version control system
+- **VS Code**: Recommended IDE with Rust/TypeScript extensions
+
+#### Solana CLI Installation
+
+```bash
+sh -c "$(curl -sSfL https://release.solana.com/stable/install)"
+solana --version
+```
+
+### Running Local Validator
+
+#### Starting Local Network
+
+```bash
+# Start local validator
+solana-test-validator
+
+# In another terminal, set localhost as default
+solana config set --url localhost
+
+# Check cluster connection
+solana cluster-version
+```
+
+#### Validator Configuration
+
+- **Port**: Default 8899 for RPC, 8900 for WebSocket
+- **Accounts**: Stores program and account data
+- **Logs**: Real-time transaction processing
+- **Performance**: Simulates mainnet conditions
+
+### JavaScript & Rust Basics
+
+#### JavaScript Fundamentals
+
+- **Variables**: `let`, `const`, `var`
+- **Functions**: Arrow functions, async/await
+- **Objects**: Destructuring, spread operator
+- **Modules**: Import/export syntax
+- **Error Handling**: Try-catch blocks
+
+#### Rust Fundamentals
+
+- **Ownership**: Unique concept for memory management
+- **Borrowing**: References and borrowing rules
+- **Lifetimes**: How long references are valid
+- **Pattern Matching**: Match expressions and destructuring
+- **Error Handling**: Result and Option types
+
+#### Key Differences
+
+- **Memory Management**: Manual vs automatic
+- **Type System**: Static vs dynamic typing
+- **Concurrency**: Ownership-based safety vs event loop
+- **Performance**: Zero-cost abstractions vs JIT compilation
+
+### JavaScript Queries for PDA Data
+
+#### Setting Up Web3.js
+
+```bash
+npm install @solana/web3.js
+```
+
+#### Basic Connection
+
+```javascript
+import { Connection, PublicKey } from "@solana/web3.js";
+
+const connection = new Connection("http://localhost:8899", "confirmed");
+```
+
+#### Querying Account Data
+
+```javascript
+// Get account info
+const accountInfo = await connection.getAccountInfo(publicKey);
+
+// Get multiple accounts
+const accounts = await connection.getMultipleAccountsInfo(publicKeys);
+
+// Get program accounts
+const programAccounts = await connection.getProgramAccounts(programId);
+```
+
+#### PDA Queries
+
+```javascript
+import { PublicKey } from "@solana/web3.js";
+
+// Find PDA
+const [pda, bump] = PublicKey.findProgramAddress(
+  [Buffer.from("seed"), owner.toBuffer()],
+  programId
+);
+
+// Get PDA data
+const pdaInfo = await connection.getAccountInfo(pda);
+```
+
+### Writing Basic Anchor Programs
+
+#### Anchor Framework Overview
+
+- **Macros**: Simplify common program patterns
+- **Accounts**: Type-safe account validation
+- **Instructions**: Structured program logic
+- **Errors**: Custom error handling
+- **Testing**: Built-in testing framework
+
+#### Program Structure
+
+```rust
+use anchor_lang::prelude::*;
+
+declare_id!("your_program_id");
+
+#[program]
+pub mod your_program {
+    use super::*;
+
+    pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
+        // Your logic here
+        Ok(())
+    }
+}
+
+#[derive(Accounts)]
+pub struct Initialize {
+    #[account(init, payer = user, space = 16 + 16)]
+    pub base_account: Account<'info, BaseAccount>,
+    #[account(mut)]
+    pub user: Signer<'info>,
+    pub system_program: Program<'info, System>,
+}
+
+#[account]
+pub struct BaseAccount {
+    pub count: u64,
+}
+```
+
+#### Key Concepts
+
+- **Accounts**: Data storage on-chain
+- **Context**: Account validation and constraints
+- **Instructions**: Public functions that can be called
+- **Seeds**: Deterministic account derivation
+- **Space**: Account storage allocation
+
+### Git Basics
+
+#### Version Control Fundamentals
+
+- **Repository**: Project history and version tracking
+- **Commit**: Snapshot of project at a point in time
+- **Branch**: Independent line of development
+- **Merge**: Combining changes from different branches
+- **Remote**: Shared repository (GitHub, GitLab)
+
+#### Essential Commands
+
+```bash
+# Initialize repository
+git init
+
+# Add files to staging
+git add .
+
+# Commit changes
+git commit -m "Initial commit"
+
+# Create and switch branches
+git checkout -b feature-branch
+
+# Push to remote
+git push origin main
+```
+
+#### Best Practices
+
+- **Commit Messages**: Clear, descriptive messages
+- **Branch Naming**: Feature/issue-based naming
+- **Regular Commits**: Small, logical changes
+- **Pull Requests**: Code review before merging
+
+## 📚 Lecture: Interactive Slides
+
+<Cards>
+  <Card
+    title="Development Environment Setup"
+    href="/docs/coding-with-solana/setup"
+  />
+  <Card
+    title="JavaScript for Solana"
+    href="/docs/coding-with-solana/javascript"
+  />
+  <Card title="Rust Fundamentals" href="/docs/coding-with-solana/rust" />
+  <Card
+    title="Anchor Framework Deep Dive"
+    href="/docs/coding-with-solana/anchor"
+  />
+  <Card title="Git & Version Control" href="/docs/coding-with-solana/git" />
+</Cards>
+
+## 🏆 Interactive Bounties
+
+**Required**: 3 bounties
+
+_Details will be announced later_
+
+## 💻 Practice Exercises
+
+### 1. On-Chain Todo App Program + UI
+
+**Requirements**:
+
+- **Smart Contract**: Anchor program with CRUD operations
+- **Frontend**: React/Next.js interface
+- **Features**: Add, complete, delete, list todos
+- **Storage**: On-chain data persistence
+
+**Technical Stack**:
+
+- Anchor framework for Solana program
+- React/Next.js for frontend
+- Web3.js for blockchain interaction
+- Tailwind CSS for styling
+
+**Deliverables**:
+
+- Working Anchor program
+- Functional React frontend
+- Deployment instructions
+- Demo video/screenshots
+
+### 2. Wall of Wish
+
+**Concept**: Decentralized wish/request board
+
+- **Smart Contract**: Store wishes with metadata
+- **Features**: Post wishes, upvote, comment
+- **UI**: Beautiful, intuitive interface
+- **Integration**: Wallet connection and transaction signing
+
+**Technical Requirements**:
+
+- Anchor program for wish management
+- Frontend with wallet integration
+- Real-time updates from blockchain
+- Responsive design for mobile/desktop
+
+### 3. PDA Counter Program
+
+**Objective**: Advanced PDA understanding
+
+- **Features**: Multiple counters per user
+- **PDA Usage**: Deterministic account derivation
+- **Testing**: Unit and integration tests
+- **Documentation**: Clear usage instructions
+
+**Implementation**:
+
+```rust
+#[derive(Accounts)]
+pub struct CreateCounter<'info> {
+    #[account(
+        init,
+        payer = user,
+        space = 8 + 8,
+        seeds = [b"counter", user.key().as_ref()],
+        bump
+    )]
+    pub counter: Account<'info, Counter>,
+    #[account(mut)]
+    pub user: Signer<'info>,
+    pub system_program: Program<'info, System>,
+}
+```
+
+### 4. Build Question Pool - Multiple Choice Questions
+
+**Coverage Areas**:
+
+- **Development Setup** (10 questions)
+- **JavaScript/Web3.js** (15 questions)
+- **Rust Programming** (15 questions)
+- **Anchor Framework** (20 questions)
+- **Git & Version Control** (10 questions)
+
+**Requirements**:
+
+- Comprehensive coverage of all topics
+- Practical, scenario-based questions
+- Clear explanations for answers
+- Progressive difficulty levels
+
+## 📝 Exam: 45 Minutes
+
+### Exam Structure
+
+- **Total Questions**: 35
+- **Time Limit**: 45 minutes
+- **Passing Score**: 75% (26/35 correct)
+
+### Question Distribution
+
+- **Development Environment**: 5 questions
+- **JavaScript/Web3.js**: 8 questions
+- **Rust Programming**: 8 questions
+- **Anchor Framework**: 10 questions
+- **Git & Version Control**: 4 questions
+
+### Exam Topics
+
+- Local validator setup and configuration
+- JavaScript async/await and error handling
+- Rust ownership and borrowing rules
+- Anchor program structure and macros
+- Account validation and constraints
+- PDA derivation and usage
+- Git workflow and collaboration
+- Testing and deployment processes
+
+### Preparation Tips
+
+- Complete all practice projects
+- Test your development environment
+- Review Anchor program examples
+- Practice Git commands
+- Ensure local validator is working
+
+## 🎯 Phase Completion Checklist
+
+- [ ] Complete all 3 interactive bounties
+- [ ] Finish all 4 practice exercises
+- [ ] Pass the 45-minute exam with 75%+
+- [ ] Deploy at least 2 programs to localnet
+- [ ] Create GitHub repository with proper workflow
+- [ ] Submit all deliverables and documentation
+- [ ] Receive phase completion certificate
+
+## 🔗 Additional Resources
+
+<Cards>
+  <Card title="Anchor Book" href="https://book.anchor-lang.com" />
+  <Card title="Rust Book" href="https://doc.rust-lang.org/book" />
+  <Card
+    title="Solana Web3.js"
+    href="https://solana-labs.github.io/solana-web3.js"
+  />
+  <Card title="GitHub Guides" href="https://guides.github.com" />
+</Cards>
