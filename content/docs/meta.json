@@ -1,0 +1,16 @@
+{
+  "title": "Solana Learning Path",
+  "description": "Complete learning path for Solana blockchain development",
+  "icon": "Rocket",
+  "root": true,
+  "pages": [
+    "---Introduction---",
+    "index",
+    "---Learning Phases---",
+    "solana-basic",
+    "coding-with-solana",
+    "ready-for-internship",
+    "---Developer Tools---",
+    "developer-tools"
+  ]
+}
