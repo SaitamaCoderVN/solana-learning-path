@@ -6,6 +6,8 @@ import { SolanaBeachWebsite } from '@/components/solana-beach-website';
 import SolanaExamQuiz from '@/components/solana-exam-quiz';
 import SolanaCodingExamQuiz from '@/components/solana-coding-exam-quiz';
 import SolanaInternshipExamQuiz from '@/components/solana-internship-exam-quiz';
+import GoogleSlidesEmbed from '@/components/google-slides-embed';
+import LearningResources from '@/components/learning-resources';
 import { FaucetWebsite } from './components/faucet-website';
 
 // use this function to get MDX components, you will need it for rendering MDX
@@ -18,6 +20,8 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     SolanaExamQuiz: () => <SolanaExamQuiz />,
     SolanaCodingExamQuiz: () => <SolanaCodingExamQuiz />,
     SolanaInternshipExamQuiz: () => <SolanaInternshipExamQuiz />,
+    GoogleSlidesEmbed: (props: any) => <GoogleSlidesEmbed {...props} />,
+    LearningResources: () => <LearningResources />,
     FaucetWebsite: () => <FaucetWebsite />,
     ...components,
   };
