@@ -83,30 +83,30 @@ const resources: Resource[] = [
 const getTypeIcon = (type: string) => {
   switch (type) {
     case 'video':
-      return <Video className="w-5 h-5" />
+      return <Video className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
     case 'document':
-      return <FileText className="w-5 h-5" />
+      return <FileText className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
     case 'tutorial':
-      return <BookOpen className="w-5 h-5" />
+      return <BookOpen className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
     case 'code':
-      return <Code className="w-5 h-5" />
+      return <Code className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
     case 'website':
-      return <Globe className="w-5 h-5" />
+      return <Globe className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
     default:
-      return <BookOpen className="w-5 h-5" />
+      return <BookOpen className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
   }
 }
 
 const getDifficultyColor = (difficulty: string) => {
   switch (difficulty) {
     case 'Beginner':
-      return 'bg-green-100 text-green-800'
+      return 'bg-green-100 text-green-800 border-green-200'
     case 'Intermediate':
-      return 'bg-yellow-100 text-yellow-800'
+      return 'bg-yellow-100 text-yellow-800 border-yellow-200'
     case 'Advanced':
-      return 'bg-red-100 text-red-800'
+      return 'bg-red-100 text-red-800 border-red-200'
     default:
-      return 'bg-gray-100 text-gray-800'
+      return 'bg-gray-100 text-gray-800 border-gray-200'
   }
 }
 
@@ -139,23 +139,24 @@ export default function LearningResources() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Filters */}
       <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Filter Resources</CardTitle>
-          <CardDescription>Find the learning materials that match your needs</CardDescription>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm sm:text-base">Filter Resources</CardTitle>
+          <CardDescription className="text-xs sm:text-sm">Find the learning materials that match your needs</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Difficulty Filter */}
           <div>
-            <h4 className="font-medium mb-2">Difficulty Level</h4>
-            <div className="flex gap-2">
+            <h4 className="font-medium mb-2 text-xs sm:text-sm">Difficulty Level</h4>
+            <div className="flex flex-wrap gap-2">
               {allDifficulties.map(difficulty => (
                 <Button
                   key={difficulty}
                   variant={selectedDifficulty === difficulty ? "default" : "outline"}
                   size="sm"
+                  className="text-xs px-3 py-1 h-8 min-w-fit"
                   onClick={() => setSelectedDifficulty(
                     selectedDifficulty === difficulty ? '' : difficulty
                   )}
@@ -168,13 +169,14 @@ export default function LearningResources() {
 
           {/* Tags Filter */}
           <div>
-            <h4 className="font-medium mb-2">Topics</h4>
+            <h4 className="font-medium mb-2 text-xs sm:text-sm">Topics</h4>
             <div className="flex flex-wrap gap-2">
               {allTags.map(tag => (
                 <Button
                   key={tag}
                   variant={selectedTags.includes(tag) ? "default" : "outline"}
                   size="sm"
+                  className="text-xs px-3 py-1 h-8 min-w-fit"
                   onClick={() => toggleTag(tag)}
                 >
                   {tag}
@@ -185,7 +187,7 @@ export default function LearningResources() {
 
           {/* Clear Filters */}
           {(selectedTags.length > 0 || selectedDifficulty !== '') && (
-            <Button variant="ghost" onClick={clearFilters} size="sm">
+            <Button variant="ghost" onClick={clearFilters} size="sm" className="text-xs h-8">
               Clear All Filters
             </Button>
           )}
@@ -193,29 +195,33 @@ export default function LearningResources() {
       </Card>
 
       {/* Resources Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {filteredResources.map(resource => (
-          <Card key={resource.id} className="h-full flex flex-col">
-            <CardHeader className="pb-3">
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-2 text-muted-foreground">
+          <Card key={resource.id} className="h-full flex flex-col overflow-hidden">
+            <CardHeader className="pb-3 flex-shrink-0">
+              <div className="flex items-start justify-between gap-3 mb-3">
+                <div className="flex items-center gap-2 text-muted-foreground min-w-0 flex-1">
                   {getTypeIcon(resource.type)}
-                  <span className="text-sm capitalize">{resource.type}</span>
+                  <span className="text-xs capitalize">{resource.type}</span>
                 </div>
                 {resource.difficulty && (
-                  <Badge className={getDifficultyColor(resource.difficulty)}>
+                  <Badge className={`${getDifficultyColor(resource.difficulty)} text-xs border px-3 py-1 flex-shrink-0 whitespace-nowrap`}>
                     {resource.difficulty}
                   </Badge>
                 )}
               </div>
-              <CardTitle className="text-lg">{resource.title}</CardTitle>
-              <CardDescription>{resource.description}</CardDescription>
+              <CardTitle className="text-sm sm:text-base leading-tight mb-2 break-words">
+                {resource.title}
+              </CardTitle>
+              <CardDescription className="text-xs sm:text-sm leading-relaxed break-words">
+                {resource.description}
+              </CardDescription>
             </CardHeader>
-            <CardContent className="pt-0 flex-1 flex flex-col">
+            <CardContent className="pt-0 flex-1 flex flex-col min-w-0">
               {/* Tags */}
-              <div className="flex flex-wrap gap-1 mb-4">
+              <div className="flex flex-wrap gap-1 mb-3 sm:mb-4">
                 {resource.tags.map(tag => (
-                  <Badge key={tag} variant="secondary" className="text-xs">
+                  <Badge key={tag} variant="secondary" className="text-xs px-2 py-1">
                     {tag}
                   </Badge>
                 ))}
@@ -223,18 +229,20 @@ export default function LearningResources() {
 
               {/* Duration */}
               {resource.duration && (
-                <div className="text-sm text-muted-foreground mb-4">
-                  ⏱️ {resource.duration}
+                <div className="text-xs text-muted-foreground mb-3 sm:mb-4 flex items-center gap-1">
+                  <span>⏱️</span>
+                  <span>{resource.duration}</span>
                 </div>
               )}
 
               {/* Action Button */}
-              <div className="mt-auto">
+              <div className="mt-auto pt-2">
                 <Button 
                   onClick={() => window.open(resource.url, '_blank')}
-                  className="w-full"
+                  className="w-full text-xs h-8"
+                  size="sm"
                 >
-                  <ExternalLink className="w-4 h-4 mr-2" />
+                  <ExternalLink className="w-3 h-3 mr-2 flex-shrink-0" />
                   Open Resource
                 </Button>
               </div>
@@ -247,10 +255,10 @@ export default function LearningResources() {
       {filteredResources.length === 0 && (
         <Card>
           <CardContent className="pt-6 text-center">
-            <p className="text-muted-foreground mb-4">
+            <p className="text-xs sm:text-sm text-muted-foreground mb-4">
               No resources match your current filters.
             </p>
-            <Button variant="outline" onClick={clearFilters}>
+            <Button variant="outline" onClick={clearFilters} size="sm" className="text-xs h-8">
               Clear Filters
             </Button>
           </CardContent>

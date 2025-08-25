@@ -723,27 +723,27 @@ export default function SolanaInternshipExamQuiz() {
 
   if (!quizStarted) {
     return (
-      <div className="container mx-auto max-w-4xl p-6">
+      <div className="container mx-auto max-w-4xl p-3 sm:p-6">
         <Card className="text-center">
           <CardHeader>
-            <CardTitle className="text-3xl">Solana Internship Readiness Exam</CardTitle>
-            <CardDescription>Test your advanced knowledge of Solana development, SPL programs, testing, and deployment</CardDescription>
+            <CardTitle className="text-2xl sm:text-3xl">Solana Internship Readiness Exam</CardTitle>
+            <CardDescription className="text-sm sm:text-base">Test your advanced knowledge of Solana development, SPL programs, testing, and deployment</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-4 sm:space-y-6">
             <Card className="bg-muted/50">
               <CardHeader>
-                <CardTitle className="text-xl">Exam Overview</CardTitle>
+                <CardTitle className="text-lg sm:text-xl">Exam Overview</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
                   <div className="space-y-2">
-                    <p><strong>Total Questions:</strong> 40</p>
-                    <p><strong>Time Limit:</strong> 45 minutes</p>
-                    <p><strong>Passing Score:</strong> 80% (32/40 correct)</p>
+                    <p className="text-sm sm:text-base"><strong>Total Questions:</strong> 40</p>
+                    <p className="text-sm sm:text-base"><strong>Time Limit:</strong> 45 minutes</p>
+                    <p className="text-sm sm:text-base"><strong>Passing Score:</strong> 80% (32/40 correct)</p>
                   </div>
                   <div>
-                    <p className="font-medium mb-2">Categories:</p>
-                    <ul className="text-sm space-y-1 text-muted-foreground">
+                    <p className="font-medium mb-2 text-sm sm:text-base">Categories:</p>
+                    <ul className="text-xs sm:text-sm space-y-1 text-muted-foreground">
                       <li>• SPL Programs (10 questions)</li>
                       <li>• Testing (8 questions)</li>
                       <li>• Deployment (8 questions)</li>
@@ -754,7 +754,7 @@ export default function SolanaInternshipExamQuiz() {
                 </div>
               </CardContent>
             </Card>
-            <Button onClick={startQuiz} size="lg">
+            <Button onClick={startQuiz} size="lg" className="w-full sm:w-auto">
               Start Exam
             </Button>
           </CardContent>
@@ -769,47 +769,47 @@ export default function SolanaInternshipExamQuiz() {
     const passed = score >= passingScore
 
     return (
-      <div className="container mx-auto max-w-4xl p-6">
+      <div className="container mx-auto max-w-4xl p-3 sm:p-6">
         <Card className="text-center">
           <CardHeader>
-            <div className="text-6xl mb-4">
+            <div className="text-4xl sm:text-6xl mb-4">
               {passed ? (
                 <Trophy className="mx-auto text-primary" />
               ) : (
                 <AlertCircle className="mx-auto text-destructive" />
               )}
             </div>
-            <CardTitle className="text-3xl">
+            <CardTitle className="text-2xl sm:text-3xl">
               {passed ? 'Congratulations! You Passed!' : 'Exam Completed'}
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-4 sm:space-y-6">
             <Card className="bg-muted/50">
               <CardContent className="pt-6">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
                   <div className="text-center">
-                    <p className="text-2xl font-bold text-primary">{score}</p>
-                    <p className="text-muted-foreground">Correct Answers</p>
+                    <p className="text-xl sm:text-2xl font-bold text-primary">{score}</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Correct Answers</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-2xl font-bold">{questions.length}</p>
-                    <p className="text-muted-foreground">Total Questions</p>
+                    <p className="text-xl sm:text-2xl font-bold">{questions.length}</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Total Questions</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-2xl font-bold text-green-600">{percentage}%</p>
-                    <p className="text-muted-foreground">Score</p>
+                    <p className="text-xl sm:text-2xl font-bold text-green-600">{percentage}%</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Score</p>
                   </div>
                 </div>
                 <div className="border-t pt-4">
-                  <h4 className="font-semibold mb-3">Performance by Category:</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <h4 className="font-semibold mb-3 text-sm sm:text-base">Performance by Category:</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {['SPL Programs', 'Testing', 'Deployment', 'Advanced Development', 'Open Source'].map(category => {
                       const { correct, total } = getCategoryScore(category)
                       const categoryPercentage = Math.round((correct / total) * 100)
                       return (
                         <div key={category} className="flex justify-between items-center">
-                          <span className="text-muted-foreground">{category}:</span>
-                          <span className={`font-semibold ${categoryPercentage >= 80 ? 'text-green-600' : 'text-destructive'}`}>
+                          <span className="text-xs sm:text-sm text-muted-foreground">{category}:</span>
+                          <span className={`font-semibold text-xs sm:text-sm ${categoryPercentage >= 80 ? 'text-green-600' : 'text-destructive'}`}>
                             {correct}/{total} ({categoryPercentage}%)
                           </span>
                         </div>
@@ -819,13 +819,13 @@ export default function SolanaInternshipExamQuiz() {
                 </div>
               </CardContent>
             </Card>
-            <div className="flex gap-3 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
               {!showResults && (
-                <Button onClick={() => setShowResults(true)} variant="outline">
+                <Button onClick={() => setShowResults(true)} variant="outline" className="w-full sm:w-auto">
                   Review Results
                 </Button>
               )}
-              <Button onClick={startQuiz}>
+              <Button onClick={startQuiz} className="w-full sm:w-auto">
                 Retake Exam
               </Button>
             </div>
@@ -835,7 +835,7 @@ export default function SolanaInternshipExamQuiz() {
         {showResults && (
           <Card className="mt-6">
             <CardHeader>
-              <CardTitle>Detailed Results</CardTitle>
+              <CardTitle className="text-lg sm:text-xl">Detailed Results</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {randomizedQuestions.map((randomizedQ, index) => {
@@ -843,17 +843,17 @@ export default function SolanaInternshipExamQuiz() {
                 const isCorrect = userAnswer === randomizedQ.correctAnswerIndex
                 return (
                   <Card key={randomizedQ.question.id} className={isCorrect ? 'border-green-200 bg-green-50/50' : 'border-destructive/20 bg-destructive/5'}>
-                    <CardContent className="pt-6">
-                      <div className="flex items-start justify-between mb-2">
-                        <Badge variant={randomizedQ.question.difficulty === 'Easy' ? 'default' : randomizedQ.question.difficulty === 'Medium' ? 'secondary' : 'destructive'}>
+                    <CardContent className="pt-4 sm:pt-6">
+                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
+                        <Badge variant={randomizedQ.question.difficulty === 'Easy' ? 'default' : randomizedQ.question.difficulty === 'Medium' ? 'secondary' : 'destructive'} className="text-xs w-fit">
                           {randomizedQ.question.difficulty}
                         </Badge>
-                        <Badge variant="outline">{randomizedQ.question.category}</Badge>
+                        <Badge variant="outline" className="text-xs w-fit">{randomizedQ.question.category}</Badge>
                       </div>
-                      <p className="font-medium mb-3">Q{index + 1}: {randomizedQ.question.question}</p>
+                      <p className="font-medium mb-3 text-sm sm:text-base">Q{index + 1}: {randomizedQ.question.question}</p>
                       <div className="space-y-2 mb-3">
                         {randomizedQ.shuffledOptions.map((option, optIndex) => (
-                          <div key={optIndex} className={`p-2 rounded border ${
+                          <div key={optIndex} className={`p-2 rounded border text-sm ${
                             optIndex === randomizedQ.correctAnswerIndex 
                               ? 'border-green-300' 
                               : optIndex === userAnswer && !isCorrect
@@ -867,8 +867,8 @@ export default function SolanaInternshipExamQuiz() {
                                 ? 'text-destructive'
                                 : 'text-foreground'
                             }`}>
-                              {optIndex === randomizedQ.correctAnswerIndex && <CheckCircle className="inline w-4 h-4 mr-2" />}
-                              {optIndex === userAnswer && !isCorrect && <XCircle className="inline w-4 h-4 mr-2" />}
+                              {optIndex === randomizedQ.correctAnswerIndex && <CheckCircle className="inline w-3 h-3 sm:w-4 sm:h-4 mr-2" />}
+                              {optIndex === userAnswer && !isCorrect && <XCircle className="inline w-3 h-3 sm:w-4 sm:h-4 mr-2" />}
                               {String.fromCharCode(65 + optIndex)}. {option}
                             </span>
                           </div>
@@ -876,7 +876,7 @@ export default function SolanaInternshipExamQuiz() {
                       </div>
                       <Card className="bg-muted/50">
                         <CardContent className="pt-4">
-                          <p className="text-sm"><strong>Explanation:</strong> {randomizedQ.question.explanation}</p>
+                          <p className="text-xs sm:text-sm"><strong>Explanation:</strong> {randomizedQ.question.explanation}</p>
                         </CardContent>
                       </Card>
                     </CardContent>
@@ -899,27 +899,27 @@ export default function SolanaInternshipExamQuiz() {
   const progress = ((currentQuestionIndex + 1) / questions.length) * 100
 
   return (
-    <div className="container mx-auto max-w-4xl p-6">
+    <div className="container mx-auto max-w-4xl p-3 sm:p-6">
       <Card>
         <CardHeader>
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
             <div>
-              <CardTitle>Solana Internship Readiness Exam</CardTitle>
-              <CardDescription>Question {currentQuestionIndex + 1} of {questions.length}</CardDescription>
+              <CardTitle className="text-lg sm:text-xl">Solana Internship Readiness Exam</CardTitle>
+              <CardDescription className="text-sm">Question {currentQuestionIndex + 1} of {questions.length}</CardDescription>
             </div>
             <div className="text-right">
               <div className="flex items-center gap-2 text-destructive font-medium">
-                <Clock className="w-5 h-5" />
-                <span>{formatTime(timeLeft)}</span>
+                <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span className="text-sm sm:text-base">{formatTime(timeLeft)}</span>
               </div>
-              <p className="text-sm text-muted-foreground">Time Remaining</p>
+              <p className="text-xs sm:text-sm text-muted-foreground">Time Remaining</p>
             </div>
           </div>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-4 sm:space-y-6">
           {/* Progress Bar */}
           <div className="space-y-2">
-            <div className="flex justify-between text-sm text-muted-foreground">
+            <div className="flex justify-between text-xs sm:text-sm text-muted-foreground">
               <span>Progress</span>
               <span>{Math.round(progress)}%</span>
             </div>
@@ -928,13 +928,13 @@ export default function SolanaInternshipExamQuiz() {
 
           {/* Question */}
           <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <Badge variant={currentRandomizedQuestion.question.difficulty === 'Easy' ? 'default' : currentRandomizedQuestion.question.difficulty === 'Medium' ? 'secondary' : 'destructive'}>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+              <Badge variant={currentRandomizedQuestion.question.difficulty === 'Easy' ? 'default' : currentRandomizedQuestion.question.difficulty === 'Medium' ? 'secondary' : 'destructive'} className="text-xs w-fit">
                 {currentRandomizedQuestion.question.difficulty}
               </Badge>
-              <Badge variant="outline">{currentRandomizedQuestion.question.category}</Badge>
+              <Badge variant="outline" className="text-xs w-fit">{currentRandomizedQuestion.question.category}</Badge>
             </div>
-            <h3 className="text-xl font-medium">{currentRandomizedQuestion.question.question}</h3>
+            <h3 className="text-lg sm:text-xl font-medium">{currentRandomizedQuestion.question.question}</h3>
             
             {/* Options */}
             <div className="space-y-3">
@@ -944,7 +944,7 @@ export default function SolanaInternshipExamQuiz() {
                   onClick={() => handleAnswerSelect(index)}
                   disabled={selectedAnswer !== null}
                   variant={selectedAnswer === index ? "default" : "outline"}
-                  className={`w-full justify-start h-auto p-4 ${
+                  className={`w-full justify-start h-auto p-3 sm:p-4 text-sm sm:text-base ${
                     selectedAnswer === index
                       ? index === currentRandomizedQuestion.correctAnswerIndex
                         ? 'text-green-700 hover:text-green-700'
@@ -964,22 +964,23 @@ export default function SolanaInternshipExamQuiz() {
           {selectedAnswer !== null && (
             <Card className="bg-muted/50">
               <CardContent className="pt-4">
-                <h4 className="font-semibold mb-2">Explanation:</h4>
-                <p className="text-muted-foreground">{currentRandomizedQuestion.question.explanation}</p>
+                <h4 className="font-semibold mb-2 text-sm sm:text-base">Explanation:</h4>
+                <p className="text-xs sm:text-sm text-muted-foreground">{currentRandomizedQuestion.question.explanation}</p>
               </CardContent>
             </Card>
           )}
 
           {/* Navigation */}
-          <div className="flex justify-between items-center pt-4 border-t">
-            <div className="text-sm text-muted-foreground">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 pt-4 border-t">
+            <div className="text-xs sm:text-sm text-muted-foreground text-center sm:text-left">
               Score: {score}/{currentQuestionIndex + 1}
             </div>
-            <div className="flex gap-3">
+            <div className="flex gap-3 justify-center sm:justify-end">
               {currentQuestionIndex < questions.length - 1 ? (
                 <Button 
                   onClick={handleNext}
                   disabled={selectedAnswer === null}
+                  className="w-full sm:w-auto"
                 >
                   Next Question
                 </Button>
@@ -988,6 +989,7 @@ export default function SolanaInternshipExamQuiz() {
                   onClick={handleFinish}
                   disabled={selectedAnswer === null}
                   variant="default"
+                  className="w-full sm:w-auto"
                 >
                   Finish Exam
                 </Button>

@@ -78,9 +78,9 @@ export default function GoogleSlidesEmbed({
   return (
     <Card className="overflow-hidden">
       <CardHeader className="pb-3">
-        <CardTitle className="text-lg">{title}</CardTitle>
+        <CardTitle className="text-base sm:text-lg">{title}</CardTitle>
         {description && (
-          <CardDescription>{description}</CardDescription>
+          <CardDescription className="text-sm">{description}</CardDescription>
         )}
       </CardHeader>
       <CardContent className="p-0">
@@ -88,32 +88,35 @@ export default function GoogleSlidesEmbed({
           <div className="relative">
             {isLoading && (
               <div className="absolute inset-0 bg-muted/50 flex items-center justify-center z-10">
-                <div className="text-center">
-                  <Loader2 className="w-8 h-8 mx-auto animate-spin mb-2" />
-                  <p className="text-sm text-muted-foreground">Loading presentation...</p>
+                <div className="text-center p-4">
+                  <Loader2 className="w-6 h-6 sm:w-8 sm:h-8 mx-auto animate-spin mb-2" />
+                  <p className="text-xs sm:text-sm text-muted-foreground">Loading presentation...</p>
                 </div>
               </div>
             )}
             
             {hasError ? (
-              <div className="p-6 text-center">
-                <AlertCircle className="w-16 h-16 mx-auto text-destructive mb-4" />
-                <p className="text-muted-foreground mb-4">
+              <div className="p-4 sm:p-6 text-center">
+                <AlertCircle className="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-destructive mb-4" />
+                <p className="text-sm sm:text-base text-muted-foreground mb-4">
                   Failed to load presentation. This may be due to CORS restrictions.
                 </p>
-                <div className="space-y-2">
+                <div className="space-y-2 sm:space-y-0 sm:space-x-2 sm:flex sm:justify-center">
                   <Button 
                     onClick={handleRetry}
                     variant="outline"
-                    className="mr-2"
+                    size="sm"
+                    className="w-full sm:w-auto"
                   >
                     Retry
                   </Button>
                   <Button 
                     onClick={() => window.open(slidesUrl, '_blank')}
                     variant="default"
+                    size="sm"
+                    className="w-full sm:w-auto"
                   >
-                    <ExternalLink className="w-4 h-4 mr-2" />
+                    <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
                     Open in New Tab
                   </Button>
                 </div>
@@ -123,10 +126,10 @@ export default function GoogleSlidesEmbed({
                 key={iframeKey}
                 src={secureEmbedUrl}
                 width="100%"
-                height="400"
+                height="300"
+                className="w-full sm:h-[400px]"
                 allowFullScreen
                 title={title}
-                className="w-full"
                 allow="autoplay; fullscreen; picture-in-picture"
                 onLoad={handleIframeLoad}
                 onError={handleIframeError}
@@ -136,31 +139,33 @@ export default function GoogleSlidesEmbed({
               />
             )}
 
-            <div className="absolute bottom-4 right-4">
+            <div className="absolute bottom-2 sm:bottom-4 right-2 sm:right-4">
               <Button 
                 size="sm" 
                 variant="secondary"
                 onClick={() => window.open(slidesUrl, '_blank')}
-                className="bg-white/90 hover:bg-white shadow-lg"
+                className="bg-white/90 hover:bg-white shadow-lg text-xs sm:text-sm"
               >
-                <ExternalLink className="w-4 h-4 mr-2" />
-                Open in Slides
+                <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                <span className="hidden sm:inline">Open in Slides</span>
+                <span className="sm:hidden">Open</span>
               </Button>
             </div>
           </div>
         ) : (
-          <div className="p-6 text-center">
+          <div className="p-4 sm:p-6 text-center">
             <div className="mb-4">
-              <AlertCircle className="w-16 h-16 mx-auto text-muted-foreground" />
+              <AlertCircle className="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-muted-foreground" />
             </div>
-            <p className="text-muted-foreground mb-4">
+            <p className="text-sm sm:text-base text-muted-foreground mb-4">
               Google Slides presentation
             </p>
             <Button 
               onClick={() => window.open(slidesUrl, '_blank')}
               className="w-full"
+              size="sm"
             >
-              <ExternalLink className="w-4 h-4 mr-2" />
+              <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
               View Presentation
             </Button>
           </div>

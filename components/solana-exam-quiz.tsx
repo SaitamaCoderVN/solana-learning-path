@@ -2,19 +2,28 @@
 
 import React, { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
-import { CheckCircle, XCircle, Clock, Trophy, AlertCircle } from 'lucide-react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
+import { Card } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
+import { GoogleCalendarEmbed } from "@/components/ui/google-calendar-embed"
 
 interface Question {
   id: number
-  category: 'Solana Basics' | 'Cryptography' | 'Wallets' | 'Transactions' | 'Network Architecture'
-  difficulty: 'Easy' | 'Medium' | 'Hard'
+  category: string
+  difficulty: 'easy' | 'medium' | 'hard'
   question: string
   options: string[]
   correctAnswer: number
   explanation: string
+}
+
+interface ExamResult {
+  totalQuestions: number
+  correctAnswers: number
+  score: number
+  passed: boolean
+  categoryScores: Record<string, { correct: number; total: number; percentage: number }>
+  timeTaken: number
+  completedAt: string
 }
 
 const questions: Question[] = [
@@ -22,7 +31,7 @@ const questions: Question[] = [
   {
     id: 1,
     category: 'Solana Basics',
-    difficulty: 'Easy',
+    difficulty: 'easy',
     question: 'What is Solana primarily designed for?',
     options: [
       'Decentralized storage',
@@ -36,7 +45,7 @@ const questions: Question[] = [
   {
     id: 2,
     category: 'Solana Basics',
-    difficulty: 'Easy',
+    difficulty: 'easy',
     question: 'What consensus mechanism does Solana use?',
     options: [
       'Proof of Work (PoW)',
@@ -50,7 +59,7 @@ const questions: Question[] = [
   {
     id: 3,
     category: 'Solana Basics',
-    difficulty: 'Medium',
+    difficulty: 'medium',
     question: 'What is the maximum theoretical throughput of Solana?',
     options: [
       '1,000 TPS',
@@ -64,7 +73,7 @@ const questions: Question[] = [
   {
     id: 4,
     category: 'Solana Basics',
-    difficulty: 'Medium',
+    difficulty: 'medium',
     question: 'What programming language are Solana programs written in?',
     options: [
       'Solidity',
@@ -78,7 +87,7 @@ const questions: Question[] = [
   {
     id: 5,
     category: 'Solana Basics',
-    difficulty: 'Hard',
+    difficulty: 'hard',
     question: 'What is a Solana program?',
     options: [
       'A type of wallet',
@@ -92,7 +101,7 @@ const questions: Question[] = [
   {
     id: 6,
     category: 'Solana Basics',
-    difficulty: 'Easy',
+    difficulty: 'easy',
     question: 'What is the native token of Solana?',
     options: [
       'ETH',
@@ -106,7 +115,7 @@ const questions: Question[] = [
   {
     id: 7,
     category: 'Solana Basics',
-    difficulty: 'Medium',
+    difficulty: 'medium',
     question: 'What is the purpose of SOL tokens?',
     options: [
       'Only for trading',
@@ -120,7 +129,7 @@ const questions: Question[] = [
   {
     id: 8,
     category: 'Solana Basics',
-    difficulty: 'Hard',
+    difficulty: 'hard',
     question: 'What is Solana\'s block time?',
     options: [
       '10 seconds',
@@ -136,7 +145,7 @@ const questions: Question[] = [
   {
     id: 9,
     category: 'Cryptography',
-    difficulty: 'Easy',
+    difficulty: 'easy',
     question: 'What cryptographic algorithm does Solana use for key generation?',
     options: [
       'RSA',
@@ -150,7 +159,7 @@ const questions: Question[] = [
   {
     id: 10,
     category: 'Cryptography',
-    difficulty: 'Medium',
+    difficulty: 'medium',
     question: 'What is a keypair in Solana?',
     options: [
       'Two public keys',
@@ -164,7 +173,7 @@ const questions: Question[] = [
   {
     id: 11,
     category: 'Cryptography',
-    difficulty: 'Medium',
+    difficulty: 'medium',
     question: 'How are Solana addresses generated?',
     options: [
       'From a private key using Ed25519',
@@ -178,7 +187,7 @@ const questions: Question[] = [
   {
     id: 12,
     category: 'Cryptography',
-    difficulty: 'Hard',
+    difficulty: 'hard',
     question: 'What is the relationship between a private key and public key in Solana?',
     options: [
       'They are mathematically unrelated',
@@ -192,7 +201,7 @@ const questions: Question[] = [
   {
     id: 13,
     category: 'Cryptography',
-    difficulty: 'Easy',
+    difficulty: 'easy',
     question: 'What is the purpose of a private key?',
     options: [
       'To receive transactions',
@@ -206,7 +215,7 @@ const questions: Question[] = [
   {
     id: 14,
     category: 'Cryptography',
-    difficulty: 'Hard',
+    difficulty: 'hard',
     question: 'What is a seed phrase?',
     options: [
       'A type of public key',
@@ -222,7 +231,7 @@ const questions: Question[] = [
   {
     id: 15,
     category: 'Wallets',
-    difficulty: 'Easy',
+    difficulty: 'easy',
     question: 'What is a Solana wallet?',
     options: [
       'A physical device',
@@ -236,7 +245,7 @@ const questions: Question[] = [
   {
     id: 16,
     category: 'Wallets',
-    difficulty: 'Medium',
+    difficulty: 'medium',
     question: 'What are the main types of Solana wallets?',
     options: [
       'Hot wallets and cold wallets',
@@ -250,7 +259,7 @@ const questions: Question[] = [
   {
     id: 17,
     category: 'Wallets',
-    difficulty: 'Medium',
+    difficulty: 'medium',
     question: 'What is a hot wallet?',
     options: [
       'A wallet connected to the internet',
@@ -264,7 +273,7 @@ const questions: Question[] = [
   {
     id: 18,
     category: 'Wallets',
-    difficulty: 'Hard',
+    difficulty: 'hard',
     question: 'What is the purpose of a wallet\'s derivation path?',
     options: [
       'To generate multiple addresses from one seed',
@@ -278,7 +287,7 @@ const questions: Question[] = [
   {
     id: 19,
     category: 'Wallets',
-    difficulty: 'Easy',
+    difficulty: 'easy',
     question: 'What should you never share?',
     options: [
       'Your public key',
@@ -292,7 +301,7 @@ const questions: Question[] = [
   {
     id: 20,
     category: 'Wallets',
-    difficulty: 'Medium',
+    difficulty: 'medium',
     question: 'What is a custodial wallet?',
     options: [
       'A wallet you control completely',
@@ -308,7 +317,7 @@ const questions: Question[] = [
   {
     id: 21,
     category: 'Transactions',
-    difficulty: 'Easy',
+    difficulty: 'easy',
     question: 'What is a Solana transaction?',
     options: [
       'A block of data',
@@ -322,7 +331,7 @@ const questions: Question[] = [
   {
     id: 22,
     category: 'Transactions',
-    difficulty: 'Medium',
+    difficulty: 'medium',
     question: 'What are the main components of a Solana transaction?',
     options: [
       'Header, body, and footer',
@@ -336,7 +345,7 @@ const questions: Question[] = [
   {
     id: 23,
     category: 'Transactions',
-    difficulty: 'Medium',
+    difficulty: 'medium',
     question: 'What is a transaction fee in Solana?',
     options: [
       'A percentage of the transaction amount',
@@ -350,7 +359,7 @@ const questions: Question[] = [
   {
     id: 24,
     category: 'Transactions',
-    difficulty: 'Hard',
+    difficulty: 'hard',
     question: 'What is a recent blockhash?',
     options: [
       'The hash of the latest block',
@@ -364,7 +373,7 @@ const questions: Question[] = [
   {
     id: 25,
     category: 'Transactions',
-    difficulty: 'Easy',
+    difficulty: 'easy',
     question: 'What happens when a transaction fails?',
     options: [
       'The fee is refunded',
@@ -378,7 +387,7 @@ const questions: Question[] = [
   {
     id: 26,
     category: 'Transactions',
-    difficulty: 'Hard',
+    difficulty: 'hard',
     question: 'What is transaction confirmation in Solana?',
     options: [
       'When the transaction is sent',
@@ -394,7 +403,7 @@ const questions: Question[] = [
   {
     id: 27,
     category: 'Network Architecture',
-    difficulty: 'Easy',
+    difficulty: 'easy',
     question: 'What is a Solana validator?',
     options: [
       'A user who sends transactions',
@@ -408,7 +417,7 @@ const questions: Question[] = [
   {
     id: 28,
     category: 'Network Architecture',
-    difficulty: 'Medium',
+    difficulty: 'medium',
     question: 'What is the difference between mainnet and devnet?',
     options: [
       'Mainnet is for testing, devnet is for production',
@@ -422,7 +431,7 @@ const questions: Question[] = [
   {
     id: 29,
     category: 'Network Architecture',
-    difficulty: 'Hard',
+    difficulty: 'hard',
     question: 'What is Proof of History (PoH)?',
     options: [
       'A consensus mechanism',
@@ -436,7 +445,7 @@ const questions: Question[] = [
   {
     id: 30,
     category: 'Network Architecture',
-    difficulty: 'Medium',
+    difficulty: 'medium',
     question: 'What is the role of stake in Solana?',
     options: [
       'To pay for transactions',
@@ -449,103 +458,208 @@ const questions: Question[] = [
   }
 ]
 
-export default function SolanaExamQuiz() {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
-  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
-  const [showExplanation, setShowExplanation] = useState(false)
-  const [score, setScore] = useState(0)
-  const [timeLeft, setTimeLeft] = useState(45 * 60) // 45 minutes in seconds
-  const [quizStarted, setQuizStarted] = useState(false)
-  const [quizCompleted, setQuizCompleted] = useState(false)
-  const [answers, setAnswers] = useState<(number | null)[]>(new Array(questions.length).fill(null))
-  const [showResults, setShowResults] = useState(false)
-  const [randomizedQuestions, setRandomizedQuestions] = useState<Array<{
-    question: Question
-    shuffledOptions: string[]
-    correctAnswerIndex: number
-  }>>([])
-
-  // Function to shuffle array
-  const shuffleArray = <T,>(array: T[]): T[] => {
-    const shuffled = [...array]
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1))
-      ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
-    }
-    return shuffled
-  }
-
-  // Function to randomize questions and options
-  const randomizeQuestions = () => {
-    const randomized = questions.map(question => {
-      const shuffledOptions = shuffleArray(question.options)
-      const correctAnswerIndex = shuffledOptions.findIndex(
-        option => option === question.options[question.correctAnswer]
-      )
-      return {
-        question,
-        shuffledOptions,
-        correctAnswerIndex
-      }
-    })
-    setRandomizedQuestions(randomized)
-  }
+// Fireworks component for celebration
+const Fireworks = () => {
+  const [particles, setParticles] = useState<Array<{id: number, x: number, y: number, vx: number, vy: number, color: string}>>([])
 
   useEffect(() => {
-    if (quizStarted && !quizCompleted && timeLeft > 0) {
-      const timer = setInterval(() => {
-        setTimeLeft((prev) => {
-          if (prev <= 1) {
-            setQuizCompleted(true)
-            return 0
-          }
-          return prev - 1
-        })
-      }, 1000)
-      return () => clearInterval(timer)
-    }
-  }, [quizStarted, quizCompleted, timeLeft])
+    const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3', '#54a0ff', '#5f27cd']
+    const newParticles = Array.from({ length: 50 }, (_, i) => ({
+      id: i,
+      x: Math.random() * window.innerWidth,
+      y: window.innerHeight,
+      vx: (Math.random() - 0.5) * 8,
+      vy: -Math.random() * 15 - 5,
+      color: colors[Math.floor(Math.random() * colors.length)]
+    }))
+    setParticles(newParticles)
 
-  const startQuiz = () => {
-    randomizeQuestions() // Randomize questions when starting
-    setQuizStarted(true)
-    setTimeLeft(45 * 60)
-    setCurrentQuestionIndex(0)
-    setScore(0)
-    setAnswers(new Array(questions.length).fill(null))
-    setQuizCompleted(false)
-    setShowResults(false)
+    const interval = setInterval(() => {
+      setParticles(prev => prev.map(particle => ({
+        ...particle,
+        x: particle.x + particle.vx,
+        y: particle.y + particle.vy,
+        vy: particle.vy + 0.3, // gravity
+        vx: particle.vx * 0.99 // air resistance
+      })).filter(particle => particle.y < window.innerHeight + 100))
+    }, 50)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <div className="fixed inset-0 pointer-events-none z-50">
+      {particles.map(particle => (
+        <div
+          key={particle.id}
+          className="absolute w-2 h-2 rounded-full animate-pulse"
+          style={{
+            left: particle.x,
+            top: particle.y,
+            backgroundColor: particle.color,
+            transform: 'translate(-50%, -50%)'
+          }}
+        />
+      ))}
+    </div>
+  )
+}
+
+export default function SolanaExamQuiz() {
+  const [currentQuestion, setCurrentQuestion] = useState(0)
+  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
+  const [answers, setAnswers] = useState<(number | null)[]>(new Array(questions.length).fill(null))
+  const [timeLeft, setTimeLeft] = useState(45 * 60) // 45 minutes in seconds
+  const [examStarted, setExamStarted] = useState(false)
+  const [examCompleted, setExamCompleted] = useState(false)
+  const [examResult, setExamResult] = useState<ExamResult | null>(null)
+  const [showReview, setShowReview] = useState(false)
+  const [showBookingLink, setShowBookingLink] = useState(false)
+  const [currentScore, setCurrentScore] = useState(0)
+
+  // Check localStorage for existing exam results on component mount
+  useEffect(() => {
+    const savedResult = localStorage.getItem('solana-exam-result')
+    if (savedResult) {
+      const result = JSON.parse(savedResult)
+      setExamResult(result)
+      setExamCompleted(true)
+      setShowBookingLink(result.passed)
+    }
+  }, [])
+
+  // Timer effect
+  useEffect(() => {
+    if (!examStarted || examCompleted) return
+
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          handleExamComplete()
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [examStarted, examCompleted])
+
+  // Calculate current score whenever answers change
+  useEffect(() => {
+    if (examStarted && !examCompleted) {
+      const answeredQuestions = answers.filter(answer => answer !== null)
+      if (answeredQuestions.length > 0) {
+        const correctCount = answeredQuestions.filter((answer, index) => {
+          const questionIndex = answers.findIndex((_, i) => answers[i] !== null && i === index)
+          return answer === questions[questionIndex]?.correctAnswer
+        }).length
+        const currentPercentage = (correctCount / answeredQuestions.length) * 100
+        setCurrentScore(currentPercentage)
+        
+        // Show booking link if score reaches 70%
+        if (currentPercentage >= 70 && !showBookingLink) {
+          setShowBookingLink(true)
+        }
+      }
+    }
+  }, [answers, examStarted, examCompleted, showBookingLink])
+
+  const handleExamComplete = () => {
+    const correctAnswers = answers.filter((answer, index) => 
+      answer === questions[index].correctAnswer
+    ).length
+
+    const score = (correctAnswers / questions.length) * 100
+    const passed = score >= 70
+
+    // Calculate category scores
+    const categoryScores: Record<string, { correct: number; total: number; percentage: number }> = {}
+    questions.forEach((question) => {
+      if (!categoryScores[question.category]) {
+        categoryScores[question.category] = { correct: 0, total: 0, percentage: 0 }
+      }
+      categoryScores[question.category].total++
+      
+      if (answers[question.id - 1] === question.correctAnswer) {
+        categoryScores[question.category].correct++
+      }
+    })
+
+    // Calculate percentages
+    Object.keys(categoryScores).forEach(category => {
+      categoryScores[category].percentage = 
+        (categoryScores[category].correct / categoryScores[category].total) * 100
+    })
+
+    const result: ExamResult = {
+      totalQuestions: questions.length,
+      correctAnswers,
+      score,
+      passed,
+      categoryScores,
+      timeTaken: 45 * 60 - timeLeft,
+      completedAt: new Date().toISOString()
+    }
+
+    setExamResult(result)
+    setExamCompleted(true)
+    setShowBookingLink(passed)
+
+    // Save to localStorage
+    localStorage.setItem('solana-exam-result', JSON.stringify(result))
   }
 
   const handleAnswerSelect = (answerIndex: number) => {
-    if (selectedAnswer !== null) return // Prevent changing answer after selection
     setSelectedAnswer(answerIndex)
-    setAnswers(prev => {
-      const newAnswers = [...prev]
-      newAnswers[currentQuestionIndex] = answerIndex
-      return newAnswers
-    })
   }
 
-  const handleNext = () => {
-    if (selectedAnswer === randomizedQuestions[currentQuestionIndex].correctAnswerIndex) {
-      setScore(prev => prev + 1)
-    }
+  const handleNextQuestion = () => {
+    if (selectedAnswer !== null) {
+      const newAnswers = [...answers]
+      newAnswers[currentQuestion] = selectedAnswer
+      setAnswers(newAnswers)
 
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(prev => prev + 1)
-      setSelectedAnswer(null)
-      setShowExplanation(false)
-    } else {
-      setQuizCompleted(true)
+      if (currentQuestion === questions.length - 1) {
+        handleExamComplete()
+      } else {
+        setCurrentQuestion(currentQuestion + 1)
+        setSelectedAnswer(null)
+      }
     }
   }
 
-  const handleFinish = () => {
-    if (selectedAnswer === randomizedQuestions[currentQuestionIndex].correctAnswerIndex) {
-      setScore(prev => prev + 1)
+  const handlePreviousQuestion = () => {
+    if (currentQuestion > 0) {
+      setCurrentQuestion(currentQuestion - 1)
+      setSelectedAnswer(answers[currentQuestion - 1])
     }
-    setQuizCompleted(true)
+  }
+
+  const startExam = () => {
+    setExamStarted(true)
+    setTimeLeft(45 * 60)
+    setCurrentQuestion(0)
+    setAnswers(new Array(questions.length).fill(null))
+    setSelectedAnswer(null)
+    setExamCompleted(false)
+    setExamResult(null)
+    setShowReview(false)
+    setShowBookingLink(false)
+    setCurrentScore(0)
+  }
+
+  const resetExam = () => {
+    setExamStarted(false)
+    setCurrentQuestion(0)
+    setAnswers(new Array(questions.length).fill(null))
+    setSelectedAnswer(null)
+    setExamCompleted(false)
+    setExamResult(null)
+    setShowReview(false)
+    setShowBookingLink(false)
+    setCurrentScore(0)
+    localStorage.removeItem('solana-exam-result')
   }
 
   const formatTime = (seconds: number) => {
@@ -554,308 +668,284 @@ export default function SolanaExamQuiz() {
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`
   }
 
-  const getCategoryQuestions = (category: string) => {
-    return questions.filter(q => q.category === category)
-  }
-
-  const getCategoryScore = (category: string) => {
-    const categoryQuestions = getCategoryQuestions(category)
-    const categoryAnswers = categoryQuestions.map(q => {
-      const randomizedQ = randomizedQuestions.find(rq => rq.question.id === q.id)
-      return randomizedQ ? answers[questions.indexOf(q)] : null
-    })
-    const correct = categoryAnswers.filter((answer, index) => {
-      if (answer === null) return false
-      const randomizedQ = randomizedQuestions.find(rq => rq.question.id === categoryQuestions[index].id)
-      return randomizedQ && answer === randomizedQ.correctAnswerIndex
-    }).length
-    return { correct, total: categoryQuestions.length }
-  }
-
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case 'Easy': return 'text-green-600 bg-green-100'
-      case 'Medium': return 'text-yellow-600 bg-yellow-100'
-      case 'Hard': return 'text-red-600 bg-red-100'
-      default: return 'text-gray-600 bg-gray-100'
-    }
-  }
-
-  if (!quizStarted) {
+  if (!examStarted && !examCompleted) {
     return (
-      <div className="container mx-auto max-w-4xl p-6">
-        <Card className="text-center">
-          <CardHeader>
-            <CardTitle className="text-3xl">Solana Fundamentals Exam</CardTitle>
-            <CardDescription>Test your knowledge of Solana blockchain fundamentals</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <Card className="bg-muted/50">
-              <CardHeader>
-                <CardTitle className="text-xl">Exam Overview</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
-                  <div className="space-y-2">
-                    <p><strong>Total Questions:</strong> 30</p>
-                    <p><strong>Time Limit:</strong> 45 minutes</p>
-                    <p><strong>Passing Score:</strong> 70% (21/30)</p>
-                  </div>
-                  <div>
-                    <p className="font-medium mb-2">Categories:</p>
-                    <ul className="text-sm space-y-1 text-muted-foreground">
-                      <li>• Solana Basics (8 questions)</li>
-                      <li>• Cryptography (6 questions)</li>
-                      <li>• Wallets (6 questions)</li>
-                      <li>• Transactions (6 questions)</li>
-                      <li>• Network Architecture (4 questions)</li>
-                    </ul>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            <Button onClick={startQuiz} size="lg">
-              Start Exam
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
+      <Card className="p-6 max-w-4xl mx-auto border border-border">
+        <div className="text-center space-y-6">
+          <h2 className="text-3xl font-bold text-foreground">Solana Fundamentals Exam</h2>
+          <div className="space-y-4">
+            <p className="text-lg text-muted-foreground">
+              Test your knowledge of Solana blockchain fundamentals
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+              <div className="bg-muted p-4 rounded-lg border border-border">
+                <h3 className="font-semibold text-foreground">Exam Details</h3>
+                <p className="text-sm text-muted-foreground">30 questions • 45 minutes • 70% to pass</p>
+              </div>
+              <div className="bg-muted p-4 rounded-lg border border-border">
+                <h3 className="font-semibold text-foreground">🎯 Categories</h3>
+                <p className="text-sm text-muted-foreground">Solana Basics, Cryptography, Wallets, Transactions, Network</p>
+              </div>
+            </div>
+          </div>
+          <Button onClick={startExam} size="lg" className="bg-foreground text-background hover:bg-foreground/90">
+            Start Exam
+          </Button>
+        </div>
+      </Card>
     )
   }
 
-  if (quizCompleted) {
-    const passingScore = 21
-    const percentage = Math.round((score / questions.length) * 100)
-    const passed = score >= passingScore
-
+  if (examCompleted && examResult) {
     return (
-      <div className="container mx-auto max-w-4xl p-6">
-        <Card className="text-center">
-          <CardHeader>
-            <div className="text-6xl mb-4">
-              {passed ? (
-                <Trophy className="mx-auto text-primary" />
-              ) : (
-                <AlertCircle className="mx-auto text-destructive" />
+      <>
+        {examResult.passed && <Fireworks />}
+        <Card className="p-6 max-w-4xl mx-auto border border-border">
+          <div className="space-y-6">
+            <div className="text-center">
+              <h2 className="text-3xl font-bold mb-4 text-foreground">
+                {examResult.passed ? '🎉 Congratulations!' : '📚 Keep Learning!'}
+              </h2>
+              
+              {examResult.passed && (
+                <div className="mb-6 p-6 bg-muted rounded-lg border border-border">
+                  <h3 className="text-xl font-bold text-foreground mb-3">🎊 Phase 1 Complete!</h3>
+                  <p className="text-lg text-foreground leading-relaxed">
+                    You are absolutely amazing for completing Phase 1 of the course! If you have any questions, 
+                    please book a meeting with Mr. Hieu K2 to get them answered!
+                  </p>
+                </div>
               )}
+              
+              <div className={`text-2xl font-bold mb-2 ${
+                examResult.passed ? 'text-foreground' : 'text-muted-foreground'
+              }`}>
+                Score: {examResult.score.toFixed(1)}%
+              </div>
+              <p className={`text-lg ${
+                examResult.passed 
+                  ? 'text-foreground' : 'text-muted-foreground'
+              }`}>
+                {examResult.passed 
+                  ? `You passed! (${examResult.correctAnswers}/${examResult.totalQuestions} correct)`
+                  : `You need ${Math.ceil(examResult.totalQuestions * 0.7) - examResult.correctAnswers} more correct answers to pass`
+                }
+              </p>
             </div>
-            <CardTitle className="text-3xl">
-              {passed ? 'Congratulations! You Passed!' : 'Exam Completed'}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <Card className="bg-muted/50">
-              <CardContent className="pt-6">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                  <div className="text-center">
-                    <p className="text-2xl font-bold text-primary">{score}</p>
-                    <p className="text-muted-foreground">Correct Answers</p>
+
+            {/* Booking Link - Show immediately when passed */}
+            {showBookingLink && (
+              <div className="mb-6">
+                <GoogleCalendarEmbed
+                  calendarUrl="https://calendar.app.google/emhsULXSy1cNFW7Q8"
+                  title="📅 Ready for the Next Step? - Trung Hiếu Bùi"
+                  className="bg-muted border-border"
+                />
+              </div>
+            )}
+
+            {/* Category Performance */}
+            <div className="space-y-4">
+              <h3 className="text-xl font-semibold text-foreground">Category Performance</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {Object.entries(examResult.categoryScores).map(([category, scores]) => (
+                  <div key={category} className="bg-muted p-4 rounded-lg border border-border">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="font-medium text-foreground">{category}</span>
+                      <span className={`font-bold ${
+                        scores.percentage >= 70 ? 'text-foreground' : 'text-muted-foreground'
+                      }`}>
+                        {scores.percentage.toFixed(1)}%
+                      </span>
+                    </div>
+                    <Progress 
+                      value={scores.percentage} 
+                      className="h-2"
+                    />
+                    <p className="text-sm text-muted-foreground mt-1">
+                      {scores.correct}/{scores.total} correct
+                    </p>
                   </div>
-                  <div className="text-center">
-                    <p className="text-2xl font-bold">{questions.length}</p>
-                    <p className="text-muted-foreground">Total Questions</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-2xl font-bold text-green-600">{percentage}%</p>
-                    <p className="text-muted-foreground">Score</p>
-                  </div>
-                </div>
-                <div className="border-t pt-4">
-                  <h4 className="font-semibold mb-3">Performance by Category:</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {['Solana Basics', 'Cryptography', 'Wallets', 'Transactions', 'Network Architecture'].map(category => {
-                      const { correct, total } = getCategoryScore(category)
-                      const categoryPercentage = Math.round((correct / total) * 100)
-                      return (
-                        <div key={category} className="flex justify-between items-center">
-                          <span className="text-muted-foreground">{category}:</span>
-                          <span className={`font-semibold ${categoryPercentage >= 70 ? 'text-green-600' : 'text-destructive'}`}>
-                            {correct}/{total} ({categoryPercentage}%)
-                          </span>
-                        </div>
-                      )
-                    })}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            <div className="flex gap-3 justify-center">
-              {!showResults && (
-                <Button onClick={() => setShowResults(true)} variant="outline">
-                  Review Results
-                </Button>
-              )}
-              <Button onClick={startQuiz}>
+                ))}
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button 
+                onClick={() => setShowReview(!showReview)}
+                variant="outline"
+                className="border-border text-foreground hover:bg-muted"
+              >
+                {showReview ? 'Hide Review' : 'Review Answers'}
+              </Button>
+              <Button 
+                onClick={resetExam}
+                variant="outline"
+                className="border-border text-foreground hover:bg-muted"
+              >
                 Retake Exam
               </Button>
             </div>
-          </CardContent>
-        </Card>
 
-        {showResults && (
-          <Card className="mt-6">
-            <CardHeader>
-              <CardTitle>Detailed Results</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {randomizedQuestions.map((randomizedQ, index) => {
-                const userAnswer = answers[index]
-                const isCorrect = userAnswer === randomizedQ.correctAnswerIndex
-                return (
-                  <Card key={randomizedQ.question.id} className={isCorrect ? 'border-green-200 bg-green-50/50' : 'border-destructive/20 bg-destructive/5'}>
-                    <CardContent className="pt-6">
-                      <div className="flex items-start justify-between mb-2">
-                        <Badge variant={randomizedQ.question.difficulty === 'Easy' ? 'default' : randomizedQ.question.difficulty === 'Medium' ? 'secondary' : 'destructive'}>
-                          {randomizedQ.question.difficulty}
-                        </Badge>
-                        <Badge variant="outline">{randomizedQ.question.category}</Badge>
-                      </div>
-                      <p className="font-medium mb-3">Q{index + 1}: {randomizedQ.question.question}</p>
-                      <div className="space-y-2 mb-3">
-                        {randomizedQ.shuffledOptions.map((option, optIndex) => (
-                          <div key={optIndex} className={`p-2 rounded border ${
-                            optIndex === randomizedQ.correctAnswerIndex 
-                              ? 'border-green-300' 
-                              : optIndex === userAnswer && !isCorrect
-                              ? 'border-destructive/30'
-                              : 'bg-muted border-border'
+            {/* Review Section */}
+            {showReview && (
+              <div className="space-y-4">
+                <h3 className="text-xl font-semibold text-foreground">Answer Review</h3>
+                {questions.map((question, index) => (
+                  <div key={question.id} className="border border-border rounded-lg p-4">
+                    <div className="flex items-start gap-3 mb-3">
+                      <span className={`font-bold text-sm px-2 py-1 rounded ${
+                        answers[index] === question.correctAnswer
+                          ? 'bg-muted text-foreground border border-border'
+                          : 'bg-muted text-muted-foreground border border-border'
+                      }`}>
+                        Q{question.id}
+                      </span>
+                      <span className="text-sm text-muted-foreground">{question.category}</span>
+                      <span className="text-sm text-muted-foreground">({question.difficulty})</span>
+                    </div>
+                    <p className="font-medium mb-3 text-foreground">{question.question}</p>
+                    <div className="space-y-2">
+                      {question.options.map((option, optionIndex) => (
+                        <div
+                          key={optionIndex}
+                          className={`p-2 rounded border ${
+                            optionIndex === question.correctAnswer
+                              ? 'bg-muted border-border'
+                              : optionIndex === answers[index] && answers[index] !== question.correctAnswer
+                              ? 'bg-muted border-border'
+                              : 'bg-background border-border'
+                          }`}
+                        >
+                          <span className={`font-medium ${
+                            optionIndex === question.correctAnswer
+                              ? 'text-foreground'
+                              : optionIndex === answers[index] && answers[index] !== question.correctAnswer
+                              ? 'text-muted-foreground'
+                              : 'text-foreground'
                           }`}>
-                            <span className={`font-medium ${
-                              optIndex === randomizedQ.correctAnswerIndex 
-                                ? 'text-green-700' 
-                                : optIndex === userAnswer && !isCorrect
-                                ? 'text-destructive'
-                                : 'text-foreground'
-                            }`}>
-                              {optIndex === randomizedQ.correctAnswerIndex && <CheckCircle className="inline w-4 h-4 mr-2" />}
-                              {optIndex === userAnswer && !isCorrect && <XCircle className="inline w-4 h-4 mr-2" />}
-                              {String.fromCharCode(65 + optIndex)}. {option}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                      <Card className="bg-muted/50">
-                        <CardContent className="pt-4">
-                          <p className="text-sm"><strong>Explanation:</strong> {randomizedQ.question.explanation}</p>
-                        </CardContent>
-                      </Card>
-                    </CardContent>
-                  </Card>
-                )
-              })}
-            </CardContent>
-          </Card>
-        )}
-      </div>
+                            {String.fromCharCode(65 + optionIndex)}. {option}
+                          </span>
+                          {optionIndex === question.correctAnswer && (
+                            <span className="ml-2 text-foreground font-semibold">✓ Correct</span>
+                          )}
+                          {optionIndex === answers[index] && answers[index] !== question.correctAnswer && (
+                            <span className="ml-2 text-muted-foreground font-semibold">✗ Your Answer</span>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-3 p-3 bg-muted rounded border border-border">
+                      <p className="text-sm text-foreground">
+                        <strong>Explanation:</strong> {question.explanation}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </Card>
+      </>
     )
   }
 
-  // Early return if no randomized questions yet
-  if (randomizedQuestions.length === 0) {
-    return null
-  }
-
-  const currentRandomizedQuestion = randomizedQuestions[currentQuestionIndex]
-  const progress = ((currentQuestionIndex + 1) / questions.length) * 100
+  const currentQ = questions[currentQuestion]
+  const progress = ((currentQuestion + 1) / questions.length) * 100
 
   return (
-    <div className="container mx-auto max-w-4xl p-6">
-      <Card>
-        <CardHeader>
-          <div className="flex justify-between items-center">
-            <div>
-              <CardTitle>Solana Fundamentals Exam</CardTitle>
-              <CardDescription>Question {currentQuestionIndex + 1} of {questions.length}</CardDescription>
-            </div>
-            <div className="text-right">
-              <div className="flex items-center gap-2 text-destructive font-medium">
-                <Clock className="w-5 h-5" />
-                <span>{formatTime(timeLeft)}</span>
-              </div>
-              <p className="text-sm text-muted-foreground">Time Remaining</p>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          {/* Progress Bar */}
-          <div className="space-y-2">
-            <div className="flex justify-between text-sm text-muted-foreground">
-              <span>Progress</span>
-              <span>{Math.round(progress)}%</span>
-            </div>
-            <Progress value={progress} />
-          </div>
+    <Card className="p-6 max-w-4xl mx-auto border border-border">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+        <div>
+          <h2 className="text-2xl font-bold text-foreground">Question {currentQuestion + 1} of {questions.length}</h2>
+          <p className="text-muted-foreground">{currentQ.category} • {currentQ.difficulty}</p>
+        </div>
+        <div className="text-right">
+          <div className="text-2xl font-bold text-foreground">{formatTime(timeLeft)}</div>
+          <div className="text-sm text-muted-foreground">Time Remaining</div>
+        </div>
+      </div>
 
-          {/* Question */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <Badge variant={currentRandomizedQuestion.question.difficulty === 'Easy' ? 'default' : currentRandomizedQuestion.question.difficulty === 'Medium' ? 'secondary' : 'destructive'}>
-                {currentRandomizedQuestion.question.difficulty}
-              </Badge>
-              <Badge variant="outline">{currentRandomizedQuestion.question.category}</Badge>
-            </div>
-            <h3 className="text-xl font-medium">{currentRandomizedQuestion.question.question}</h3>
-            
-            {/* Options */}
-            <div className="space-y-3">
-              {currentRandomizedQuestion.shuffledOptions.map((option, index) => (
-                <Button
-                  key={index}
-                  onClick={() => handleAnswerSelect(index)}
-                  disabled={selectedAnswer !== null}
-                  variant={selectedAnswer === index ? "default" : "outline"}
-                  className={`w-full justify-start h-auto p-4 ${
-                    selectedAnswer === index
-                      ? index === currentRandomizedQuestion.correctAnswerIndex
-                        ? 'text-green-700 hover:text-green-700'
-                        : 'text-destructive hover:text-destructive'
-                      : ''
-                  }`}
-                >
-                  <span className="font-medium">
-                    {String.fromCharCode(65 + index)}. {option}
-                  </span>
-                </Button>
-              ))}
-            </div>
-          </div>
+      {/* Progress Bar */}
+      <div className="mb-6">
+        <div className="flex justify-between text-sm text-muted-foreground mb-2">
+          <span>Progress</span>
+          <span>{Math.round(progress)}%</span>
+        </div>
+        <Progress value={progress} className="h-3" />
+      </div>
 
-          {/* Explanation */}
-          {selectedAnswer !== null && (
-            <Card className="bg-muted/50">
-              <CardContent className="pt-4">
-                <h4 className="font-semibold mb-2">Explanation:</h4>
-                <p className="text-muted-foreground">{currentRandomizedQuestion.question.explanation}</p>
-              </CardContent>
-            </Card>
-          )}
+      {/* Current Score Display */}
+      <div className="mb-6 p-4 bg-muted rounded-lg border border-border">
+        <div className="flex justify-between items-center">
+          <span className="text-sm font-medium text-foreground">Current Score</span>
+          <span className={`text-lg font-bold ${
+            currentScore >= 70 ? 'text-foreground' : 'text-muted-foreground'
+          }`}>
+            {currentScore.toFixed(1)}%
+          </span>
+        </div>
+        <div className="mt-2">
+          <Progress 
+            value={currentScore} 
+            className="h-2"
+          />
+        </div>
+      </div>
 
-          {/* Navigation */}
-          <div className="flex justify-between items-center pt-4 border-t">
-            <div className="text-sm text-muted-foreground">
-              Score: {score}/{currentQuestionIndex + 1}
-            </div>
-            <div className="flex gap-3">
-              {currentQuestionIndex < questions.length - 1 ? (
-                <Button 
-                  onClick={handleNext}
-                  disabled={selectedAnswer === null}
-                >
-                  Next Question
-                </Button>
-              ) : (
-                <Button 
-                  onClick={handleFinish}
-                  disabled={selectedAnswer === null}
-                  variant="default"
-                >
-                  Finish Exam
-                </Button>
-              )}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+      {/* Booking Link - Show during exam if score >= 70% */}
+      {showBookingLink && (
+        <div className="mb-6">
+          <GoogleCalendarEmbed
+            calendarUrl="https://calendar.app.google/emhsULXSy1cNFW7Q8"
+            title="📅 K2 Lounge - Trung Hiếu Bùi"
+            className="bg-muted border-border"
+          />
+        </div>
+      )}
+
+      {/* Question */}
+      <div className="mb-6">
+        <p className="text-lg font-medium mb-6 text-foreground">{currentQ.question}</p>
+        <div className="space-y-3">
+          {currentQ.options.map((option, index) => (
+            <button
+              key={index}
+              onClick={() => handleAnswerSelect(index)}
+              className={`w-full text-left p-4 rounded-lg border-2 transition-all duration-200 ${
+                selectedAnswer === index
+                  ? 'border-foreground bg-muted'
+                  : 'border-border hover:border-foreground/50 hover:bg-muted/50'
+              }`}
+            >
+              <span className="font-medium text-foreground">
+                {String.fromCharCode(65 + index)}. {option}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Navigation */}
+      <div className="flex justify-between">
+        <Button
+          onClick={handlePreviousQuestion}
+          disabled={currentQuestion === 0}
+          variant="outline"
+          className="border-border text-foreground hover:bg-muted"
+        >
+          ← Previous
+        </Button>
+        <Button
+          onClick={handleNextQuestion}
+          disabled={selectedAnswer === null}
+          className="bg-foreground text-background hover:bg-foreground/90"
+        >
+          {currentQuestion === questions.length - 1 ? 'Finish Exam' : 'Next →'}
+        </Button>
+      </div>
+    </Card>
   )
 }

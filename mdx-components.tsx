@@ -9,6 +9,8 @@ import SolanaInternshipExamQuiz from '@/components/solana-internship-exam-quiz';
 import GoogleSlidesEmbed from '@/components/google-slides-embed';
 import LearningResources from '@/components/learning-resources';
 import { FaucetWebsite } from './components/faucet-website';
+import { TabbedContent, TabList, Tab, TabContent } from "@/components/ui/tabs"
+import { GoogleCalendarEmbed } from "@/components/ui/google-calendar-embed"
 
 // use this function to get MDX components, you will need it for rendering MDX
 export function getMDXComponents(components?: MDXComponents): MDXComponents {
@@ -23,6 +25,11 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     GoogleSlidesEmbed: (props: any) => <GoogleSlidesEmbed {...props} />,
     LearningResources: () => <LearningResources />,
     FaucetWebsite: () => <FaucetWebsite />,
-    ...components,
+    TabbedContent,
+    TabList,
+    Tab,
+    TabContent,
+    GoogleCalendarEmbed,
+    ...components
   };
 }

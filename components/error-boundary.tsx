@@ -40,19 +40,19 @@ export class ErrorBoundary extends Component<Props, State> {
       }
 
       return (
-        <Card className="max-w-md mx-auto mt-8">
+        <Card className="max-w-md mx-auto mt-4 sm:mt-8 mx-4 sm:mx-auto">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <AlertCircle className="w-5 h-5 text-destructive" />
+            <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+              <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 text-destructive" />
               Something went wrong
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-sm">
               An error occurred while rendering this component.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {this.state.error && (
-              <details className="text-sm text-muted-foreground">
+              <details className="text-xs sm:text-sm text-muted-foreground">
                 <summary className="cursor-pointer hover:text-foreground">
                   Error details
                 </summary>
@@ -61,8 +61,8 @@ export class ErrorBoundary extends Component<Props, State> {
                 </pre>
               </details>
             )}
-            <Button onClick={this.handleRetry} className="w-full">
-              <RefreshCw className="w-4 h-4 mr-2" />
+            <Button onClick={this.handleRetry} className="w-full text-sm">
+              <RefreshCw className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
               Try again
             </Button>
           </CardContent>
