@@ -19,47 +19,6 @@ export default function HomePage() {
           <Button asChild size="lg" className="w-full sm:w-auto">
             <Link href="/docs">Start Learning</Link>
           </Button>
-
-          <Button
-            asChild
-            variant={"outline"}
-            size="lg"
-            className="w-full sm:w-auto"
-          >
-            <Link href="/docs/developer-tools">Developer Tools</Link>
-          </Button>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 text-center px-2">
-          <div className="p-4 sm:p-6 border border-gray-200 rounded-lg">
-            <div className="text-2xl sm:text-3xl mb-2">🎯</div>
-            <h3 className="font-semibold mb-2 text-sm sm:text-base">
-              3 Learning Phases
-            </h3>
-            <p className="text-xs sm:text-sm text-fd-muted-foreground">
-              From basics to internship-ready skills
-            </p>
-          </div>
-
-          <div className="p-4 sm:p-6 border border-gray-200 rounded-lg">
-            <div className="text-2xl sm:text-3xl mb-2">💻</div>
-            <h3 className="font-semibold mb-2 text-sm sm:text-base">
-              Hands-on Projects
-            </h3>
-            <p className="text-xs sm:text-sm text-fd-muted-foreground">
-              Build real dApps and smart contracts
-            </p>
-          </div>
-
-          <div className="p-4 sm:p-6 border border-gray-200 rounded-lg sm:col-span-2 lg:col-span-1">
-            <div className="text-2xl sm:text-3xl mb-2">🚀</div>
-            <h3 className="font-semibold mb-2 text-sm sm:text-base">
-              Production Ready
-            </h3>
-            <p className="text-xs sm:text-sm text-fd-muted-foreground">
-              Deploy to devnet and mainnet
-            </p>
-          </div>
         </div>
       </div>
     </main>

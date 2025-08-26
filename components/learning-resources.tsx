@@ -49,34 +49,121 @@ const resources: Resource[] = [
     tags: ['Transactions', 'Network', 'Confirmation']
   },
   {
-    id: '4',
-    title: 'Solana Development Setup',
-    description: 'Step-by-step guide to set up your Solana development environment',
-    type: 'tutorial',
-    url: 'https://solana.com/en/developers/guides/getstarted',
-    duration: '30 min',
+    id: '7',
+    title: 'Solana Documentation',
+    description: 'Official Solana documentation and guides',
+    type: 'document',
+    url: 'https://docs.solana.com',
     difficulty: 'Beginner',
-    tags: ['Setup', 'Development', 'Environment']
+    tags: ['Documentation', 'Official', 'Guides']
   },
   {
-    id: '5',
-    title: 'Wallet Integration Guide',
-    description: 'Learn how to integrate wallets with your Solana applications',
-    type: 'code',
-    url: 'https://solana.com/en/developers/guides/wallet-integration',
-    duration: '45 min',
-    difficulty: 'Intermediate',
-    tags: ['Wallets', 'Integration', 'DApps']
-  },
-  {
-    id: '6',
-    title: 'Solana Program Development',
-    description: 'Introduction to developing smart contracts (programs) on Solana',
+    id: '8',
+    title: 'Solana Cookbook',
+    description: 'Practical examples and guides for Solana development',
     type: 'tutorial',
-    url: 'https://solana.com/en/developers/guides/program-development',
-    duration: '60 min',
+    url: 'https://solanacookbook.com',
+    difficulty: 'Intermediate',
+    tags: ['Examples', 'Guides', 'Practical']
+  },
+  {
+    id: '10',
+    title: 'Anchor Book',
+    description: 'Complete Anchor framework guide for Solana development',
+    type: 'document',
+    url: 'https://book.anchor-lang.com',
+    difficulty: 'Intermediate',
+    tags: ['Anchor', 'Framework', 'Smart Contracts']
+  },
+  {
+    id: '11',
+    title: 'Rust Book',
+    description: 'Official Rust programming language guide',
+    type: 'document',
+    url: 'https://doc.rust-lang.org/book/ch01-01-installation.html',
+    difficulty: 'Intermediate',
+    tags: ['Rust', 'Programming', 'Language']
+  },
+  {
+    id: '12',
+    title: 'Solana Web3.js',
+    description: 'JavaScript client library for Solana',
+    type: 'code',
+    url: 'https://www.npmjs.com/package/@solana/web3.js',
+    difficulty: 'Intermediate',
+    tags: ['JavaScript', 'Client Library', 'Web3']
+  },
+  {
+    id: '13',
+    title: 'Solana CLI',
+    description: 'Command line interface for Solana development',
+    type: 'tutorial',
+    url: 'https://docs.solana.com/cli',
+    difficulty: 'Beginner',
+    tags: ['CLI', 'Command Line', 'Tools']
+  },
+  {
+    id: '14',
+    title: 'Solana Program Library',
+    description: 'Official program examples and implementations',
+    type: 'code',
+    url: 'https://github.com/solana-labs/solana-program-library',
     difficulty: 'Advanced',
-    tags: ['Smart Contracts', 'Programs', 'Development']
+    tags: ['Examples', 'Programs', 'GitHub']
+  },
+  {
+    id: '15',
+    title: 'SPL Token Program',
+    description: 'Standard token implementation for Solana',
+    type: 'document',
+    url: 'https://spl.solana.com/token',
+    difficulty: 'Intermediate',
+    tags: ['SPL', 'Tokens', 'Implementation']
+  },
+  {
+    id: '16',
+    title: 'SPL Token-2022',
+    description: 'Enhanced token features and capabilities',
+    type: 'document',
+    url: 'https://spl.solana.com/token-2022',
+    difficulty: 'Advanced',
+    tags: ['SPL', 'Tokens', 'Advanced Features']
+  },
+  {
+    id: '17',
+    title: 'Solana Clusters',
+    description: 'Official Solana documentation for cluster and validator settings',
+    type: 'tutorial',
+    url: 'https://docs.solana.com/clusters',
+    difficulty: 'Beginner',
+    tags: ['Cluster', 'Testing', 'Development']
+  },
+  {
+    id: '18',
+    title: 'Local Validator Setup',
+    description: 'Set up local Solana network for development',
+    type: 'tutorial',
+    url: 'https://docs.solana.com/developing/test-validator',
+    difficulty: 'Intermediate',
+    tags: ['Local Network', 'Validator', 'Setup']
+  },
+  {
+    id: '19',
+    title: 'Solana GitHub',
+    description: 'Core Solana repository and source code',
+    type: 'code',
+    url: 'https://github.com/solana-labs/solana',
+    difficulty: 'Advanced',
+    tags: ['GitHub', 'Source Code', 'Repository']
+  },
+  {
+    id: '20',
+    title: 'Anchor GitHub',
+    description: 'Anchor framework repository and examples',
+    type: 'code',
+    url: 'https://github.com/coral-xyz/anchor',
+    difficulty: 'Intermediate',
+    tags: ['GitHub', 'Anchor', 'Framework']
   }
 ]
 
