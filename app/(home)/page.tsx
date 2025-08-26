@@ -20,6 +20,23 @@ export default function HomePage() {
             <Link href="/docs">Start Learning</Link>
           </Button>
         </div>
+
+        {/* Community Section - Simple and Natural */}
+        <div className="mt-8 sm:mt-12 max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base text-fd-muted-foreground mb-3">
+            Want to learn more about the Solana developer journey?
+          </p>
+          <Button 
+            asChild 
+            variant="ghost" 
+            size="sm" 
+            className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 px-4 py-2 h-auto"
+          >
+            <Link href="https://superteamvn.substack.com/p/solana-developer-journey" target="_blank">
+              🇻🇳 Read Solana Developer Journey by Superteam Vietnam →
+            </Link>
+          </Button>
+        </div>
       </div>
     </main>
   );
