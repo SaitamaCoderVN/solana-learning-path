@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { ExternalLink, BookOpen, Video, FileText, Code, Globe } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 
+
 interface Resource {
   id: string
   title: string
@@ -227,6 +228,8 @@ export default function LearningResources() {
 
   return (
     <div className="space-y-4 sm:space-y-6">
+
+
       {/* Filters */}
       <Card>
         <CardHeader className="pb-3">

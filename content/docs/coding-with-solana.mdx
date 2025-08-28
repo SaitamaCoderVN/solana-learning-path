@@ -3,6 +3,8 @@ title: Phase 2 - Coding with Solana
 description: Hands-on development with Solana, JavaScript, Rust, and Anchor framework
 ---
 
+import { phase2PracticeQuestions } from '@/lib/practice-questions-phase2';
+
 ## 📚 Course Content
 
 <TabbedContent defaultTab="lecture">
@@ -36,50 +38,14 @@ description: Hands-on development with Solana, JavaScript, Rust, and Anchor fram
   <TabContent value="practice">
     ## 💻 Practice Exercises
 
-    ### 1. On-Chain Todo App Program + UI
+    **Complete these exercises before taking the exam. You must answer all questions correctly to proceed.**
 
-    **Requirements**:
-
-    - **Smart Contract**: Anchor program with CRUD operations
-    - **Frontend**: React/Next.js interface
-    - **Features**: Add, complete, delete, list todos
-    - **Storage**: On-chain data persistence
-
-    **Technical Stack**: Anchor framework, React/Next.js, Web3.js, Tailwind CSS
-
-    **Deliverables**: Working program, functional frontend, deployment instructions, demo
-
-    ### 2. Wall of Wish
-
-    **Concept**: Decentralized wish/request board
-
-    - **Smart Contract**: Store wishes with metadata
-    - **Features**: Post wishes, upvote, comment
-    - **UI**: Beautiful, intuitive interface
-    - **Integration**: Wallet connection and transaction signing
-
-    **Technical Requirements**: Anchor program, wallet integration, real-time updates, responsive design
-
-    ### 3. PDA Counter Program
-
-    **Objective**: Advanced PDA understanding
-
-    - **Features**: Multiple counters per user
-    - **PDA Usage**: Deterministic account derivation
-    - **Testing**: Unit and integration tests
-    - **Documentation**: Clear usage instructions
-
-    ### 4. Build Question Pool - Multiple Choice Questions
-
-    **Coverage Areas**:
-
-    - **Development Setup** (10 questions)
-    - **JavaScript/Web3.js** (15 questions)
-    - **Rust Programming** (15 questions)
-    - **Anchor Framework** (20 questions)
-    - **Git & Version Control** (10 questions)
-
-**Requirements**: Comprehensive coverage, practical scenarios, clear explanations, progressive difficulty
+    <PhasePracticeSection
+      phase="Phase 2"
+      practiceQuestions={phase2PracticeQuestions}
+      title="Phase 2 - Coding with Solana"
+      description="Complete all 75 practice questions to prepare for the exam. Questions cover Development Environment, JavaScript & Web3.js, Rust Programming, and Anchor Framework."
+    />
   </TabContent>
 
   <TabContent value="exam">

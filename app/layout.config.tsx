@@ -1,6 +1,6 @@
 import MurphyLogo from "@/components/murphy-logo";
 import type { BaseLayoutProps, LinkItemType } from "fumadocs-ui/layouts/shared";
-import { Book, ChevronDown } from "lucide-react";
+import { Book, ChevronDown, Code } from "lucide-react";
 
 /**
  * Shared layout configurations
@@ -17,6 +17,7 @@ export const linkItems: LinkItemType[] = [
     icon: <Book />,
     active: "url",
   },
+
   // {
   //   text: "About Murphy",
   //   url: "/about",

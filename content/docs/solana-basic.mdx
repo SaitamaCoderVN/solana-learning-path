@@ -3,6 +3,8 @@ title: Phase 1 - Solana Basic
 description: Foundation knowledge and skills for Solana blockchain development
 ---
 
+import { phase1PracticeQuestions } from '@/lib/practice-questions-phase1';
+
 ## 📚 Course Content
 
 <TabbedContent defaultTab="lecture">
@@ -34,63 +36,16 @@ description: Foundation knowledge and skills for Solana blockchain development
   </TabContent>
 
   <TabContent value="practice">
-    ##  Practice Exercises
+    ## 💻 Practice Exercises
 
-    ### 1. Build Question Pool - Multiple Choice Questions
+    **Complete these exercises before taking the exam. You must answer all questions correctly to proceed.**
 
-    Create a comprehensive question bank covering:
-
-    - **Solana Fundamentals** (15 questions)
-    - **Cryptography Concepts** (10 questions)
-    - **Wallet Operations** (10 questions)
-    - **Network Architecture** (10 questions)
-
-    **Requirements**:
-
-    - Each question must have 4 answer choices
-    - Include explanations for correct answers
-    - Cover difficulty levels: Easy (40%), Medium (40%), Hard (20%)
-    - Submit as a structured JSON or markdown file
-
-    ### 2. Create & Transact with Wallet using JavaScript
-
-    **Setup**:
-
-    ```bash
-    npm init -y
-    npm install @solana/web3.js
-    ```
-
-    **Tasks**:
-
-    - Generate a new keypair
-    - Connect to Solana devnet
-    - Request airdrop of SOL
-    - Send a transaction to another address
-    - Verify transaction success
-
-    **Deliverables**:
-
-    - Working JavaScript code
-    - Transaction hash from devnet
-    - Screenshot of successful transaction
-
-    ### 3. Claim Devnet Token with Solana Faucet
-
-    **Steps**:
-
-    1. Visit Solana Faucet (https://faucet.solana.com/)
-    <FaucetWebsite />
-    2. Connect your wallet
-    3. Request devnet SOL
-    4. Verify balance increase
-    5. Document the process
-
-    **Requirements**:
-
-    - Screenshot of faucet interaction
-    - Proof of balance increase
-    - Understanding of faucet limitations and purpose
+    <PhasePracticeSection
+      phase="Phase 1"
+      practiceQuestions={phase1PracticeQuestions}
+      title="Phase 1 - Solana Basic"
+      description="Complete all 50 practice questions to prepare for the exam. Questions cover Solana Fundamentals, Cryptography & Wallets, and Network & Transactions."
+    />
   </TabContent>
 
   <TabContent value="exam">

@@ -3,6 +3,8 @@ title: Phase 3 - Ready for Internship
 description: Advanced Solana development, testing, deployment, and open source contribution
 ---
 
+import { phase3PracticeQuestions } from '@/lib/practice-questions-phase3';
+
 ## 📚 Course Content
 
 <TabbedContent defaultTab="lecture">
@@ -36,44 +38,14 @@ description: Advanced Solana development, testing, deployment, and open source c
   <TabContent value="practice">
     ## 💻 Practice Exercises
 
-    ### 1. Display Token List of a Wallet
+    **Complete these exercises before taking the exam. You must answer all questions correctly to proceed.**
 
-    **Objective**: Build comprehensive token management interface
-
-    **Requirements**:
-    - **Backend**: Solana program for token queries
-    - **Frontend**: React interface with wallet integration
-    - **Features**: Token list, balances, transfer functionality
-    - **Integration**: Support for SPL and Token-2022
-
-    ### 2. Anchor Vault
-
-    **Concept**: Secure multi-signature vault system
-
-    - **Smart Contract**: Multi-sig vault with time locks
-    - **Features**: Deposit, withdraw, time-based restrictions
-    - **Security**: Multiple signature requirements
-    - **Advanced Features**: Time-locked withdrawals, emergency pause, audit logging
-
-    ### 3. Anchor Escrow
-
-    **Objective**: Build trustless escrow system
-
-    - **Smart Contract**: Escrow with dispute resolution
-    - **Features**: Create, fund, release, dispute escrows
-    - **Security**: Time-based auto-release
-    - **Integration**: Multi-token support
-
-    ### 4. Build Question Pool - Multiple Choice Questions
-
-    **Coverage Areas**:
-    - **SPL Programs** (20 questions)
-    - **Testing Strategies** (15 questions)
-    - **Deployment & DevOps** (15 questions)
-    - **Advanced Development** (20 questions)
-    - **Open Source & Collaboration** (10 questions)
-
-    **Requirements**: Production-focused scenarios, real-world problem solving
+    <PhasePracticeSection
+      phase="Phase 3"
+      practiceQuestions={phase3PracticeQuestions}
+      title="Phase 3 - Ready for Internship"
+      description="Complete all 70 practice questions to prepare for the exam. Questions cover SPL Programs, Testing Strategies, Deployment & DevOps, and Advanced Development."
+    />
   </TabContent>
 
   <TabContent value="exam">
