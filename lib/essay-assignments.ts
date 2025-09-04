@@ -52,40 +52,6 @@ export const essayAssignments: EssayAssignment[] = [
     forks: 34,
     lastUpdated: '2024-01-15'
   },
-  {
-    id: 'phase1-2',
-    title: 'Claim Devnet Token with Solana Faucet',
-    description: 'Create an application that interacts with Solana devnet faucet to request test tokens. This project teaches network interaction and faucet usage for development.',
-    phase: 'Phase 1',
-    category: 'Network Interaction',
-    difficulty: 'Beginner',
-    estimatedTime: '1-2 days',
-    githubRepo: 'https://github.com/solana-labs/solana-program-library',
-    githubIssues: [
-      'https://github.com/solana-labs/solana-program-library/issues/1001',
-      'https://github.com/solana-labs/solana-program-library/issues/1002'
-    ],
-    requirements: [
-      'Connect to Solana devnet',
-      'Request SOL from faucet',
-      'Handle faucet responses',
-      'Display updated balance',
-      'Implement retry logic',
-      'Add proper error handling'
-    ],
-    learningObjectives: [
-      'Understand Solana networks',
-      'Learn faucet interaction',
-      'Master network connections',
-      'Implement retry mechanisms',
-      'Handle network responses'
-    ],
-    participants: 203,
-    stars: 156,
-    forks: 67,
-    lastUpdated: '2024-01-20'
-  },
-
   // Phase 2 - Coding with Solana
   {
     id: 'phase2-1',
