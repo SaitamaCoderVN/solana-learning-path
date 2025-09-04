@@ -8,6 +8,7 @@ import SolanaCodingExamQuiz from '@/components/solana-coding-exam-quiz';
 import SolanaInternshipExamQuiz from '@/components/solana-internship-exam-quiz';
 import SolanaPracticeQuiz from '@/components/solana-practice-quiz';
 import PhasePracticeSection from '@/components/phase-practice-section';
+import BountySection from '@/components/bounty-section';
 import GoogleSlidesEmbed from '@/components/google-slides-embed';
 import LearningResources from '@/components/learning-resources';
 import { FaucetWebsite } from './components/faucet-website';
@@ -26,6 +27,7 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     SolanaInternshipExamQuiz: () => <SolanaInternshipExamQuiz />,
     SolanaPracticeQuiz: (props: any) => <SolanaPracticeQuiz {...props} />,
     PhasePracticeSection: (props: any) => <PhasePracticeSection {...props} />,
+    BountySection: (props: any) => <BountySection {...props} />,
     GoogleSlidesEmbed: (props: any) => <GoogleSlidesEmbed {...props} />,
     LearningResources: () => <LearningResources />,
     FaucetWebsite: () => <FaucetWebsite />,

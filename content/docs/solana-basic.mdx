@@ -28,11 +28,7 @@ import { phase1PracticeQuestions } from '@/lib/practice-questions-phase1';
   <TabContent value="interactive">
     ## 🏆 Interactive Bounties
 
-    **Required**: 3 bounties
-
-    _Details will be announced later_
-
-    <EarnBountyWebsite />
+    <BountySection phase="Phase 1" showDetails={true} />
   </TabContent>
 
   <TabContent value="practice">
@@ -53,50 +49,5 @@ import { phase1PracticeQuestions } from '@/lib/practice-questions-phase1';
 
     <SolanaExamQuiz />
 
-    The quiz component I've created includes:
-
-    **Key Features:**
-    - **30 questions** covering all exam categories with proper distribution
-    - **45-minute timer** with countdown display
-    - **Real-time scoring** and progress tracking
-    - **Difficulty levels** (Easy 40%, Medium 40%, Hard 20%)
-    - **Category-based performance** analysis
-    - **Detailed explanations** for each answer
-    - **Results review** with correct/incorrect answers highlighted
-    - **Responsive design** that works on all devices
-
-    **Question Categories:**
-    - **Solana Basics (8 questions)**: Core concepts, consensus, throughput, programming
-    - **Cryptography (6 questions)**: Key generation, keypairs, addresses, security
-    - **Wallets (6 questions)**: Types, security, management, best practices
-    - **Transactions (6 questions)**: Structure, fees, confirmation, lifecycle
-    - **Network Architecture (4 questions)**: Validators, networks, PoH, staking
-
-    **Interactive Elements:**
-    - Start screen with exam overview
-    - Question-by-question navigation
-    - Immediate feedback and explanations
-    - Progress bar and timer
-    - Comprehensive results with category breakdown
-    - Option to review all answers with explanations
-
-    The quiz maintains the same passing criteria (70% - 21/30 correct) and covers all the topics mentioned in the original exam section. Users can retake the exam multiple times to improve their understanding of Solana fundamentals.
-
-    ## 🎯 Ready to Take the Next Step?
-
-    Once you've completed the exam and achieved a passing score (70% or higher), you'll be ready to move forward in your Solana learning journey. 
-
-    **What happens next?**
-    - Review your exam results and understand areas for improvement
-    - Complete any remaining practice exercises
-    - Schedule a meeting to discuss your next learning path
-    - Get personalized guidance on advanced Solana topics
-
-    **Meeting Topics We Can Cover:**
-    - Review of your exam performance and areas for improvement
-    - Discussion of advanced Solana concepts (Phase 2 & 3 topics)
-    - Hands-on coding challenges and real-world projects
-    - Career guidance in Solana development
-    - Q&A about any Solana-related topics
   </TabContent>
 </TabbedContent>
