@@ -29,14 +29,14 @@ export default function SimpleBounties({ phase }: SimpleBountiesProps) {
   return (
     <div className="space-y-4">
       {/* Phase Header */}
-      <div className="text-center mb-6">
+      {/* <div className="text-center mb-6">
         <h3 className="text-2xl font-bold text-foreground mb-2">
           🏆 {phase} Bounties
         </h3>
         <p className="text-muted-foreground">
           Complete {bountyConfig.requiredBounties} bounties to finish this phase
         </p>
-      </div>
+      </div> */}
 
       {/* Bounties List */}
       <div className="space-y-3">
