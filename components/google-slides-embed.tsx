@@ -21,7 +21,7 @@ export default function GoogleSlidesEmbed({
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
   const [iframeKey, setIframeKey] = useState(0)
-
+  
   // Convert regular Google Slides URL to embed URL
   const getEmbedUrl = (url: string) => {
     try {
@@ -127,7 +127,7 @@ export default function GoogleSlidesEmbed({
                 src={secureEmbedUrl}
                 width="100%"
                 height="300"
-                className="w-full sm:h-[400px]"
+                className="w-full sm:h-[600px]"
                 allowFullScreen
                 title={title}
                 allow="autoplay; fullscreen; picture-in-picture"
@@ -143,7 +143,7 @@ export default function GoogleSlidesEmbed({
               <Button 
                 size="sm" 
                 variant="secondary"
-                onClick={() => window.open(slidesUrl, '_blank')}
+                onClick={() => window.open(embedUrl, '_blank')}
                 className="bg-white/90 hover:bg-white shadow-lg text-xs sm:text-sm"
               >
                 <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
